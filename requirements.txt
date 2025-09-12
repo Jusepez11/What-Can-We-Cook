@@ -1,6 +1,5 @@
 python-dotenv
 pydantic
-firebase-admin
 uvicorn[standard]
 fastapi
 sqlalchemy
