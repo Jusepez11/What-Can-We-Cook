@@ -5,3 +5,6 @@ fastapi
 sqlalchemy
 httpx
 pytest
+passlib
+python-jose[cryptography]
+python-multipart
