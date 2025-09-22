@@ -19,11 +19,11 @@ class User(Base):
 	id = Column(Integer, primary_key=True, index=True)
 	username = Column(String, unique=True, index=True)
 	email = Column(String, unique=True, index=True)
-	hashed_password = Column(String)
+	hashed_password = Column(String, nullable=False)
 	is_active = Column(Boolean, default=True, nullable=False)
 	created_at = Column(DateTime, default=func.now())
 	role = Column(Enum(Role), default=Role.User, nullable=False)
 
 	def __repr__(self) -> str:
-		"""Readable representation useful in logs/debugging (no secrets)."""
+		"""Readable representation useful in logs/debugging"""
 		return f"<User id={self.id} username={self.username} email={self.email} role={self.role}>"
