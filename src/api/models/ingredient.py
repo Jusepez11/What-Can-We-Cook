@@ -8,7 +8,7 @@ class Ingredient(Base):
 	"""SQLAlchemy Ingredient model representing ingredients."""
 	__tablename__ = "ingredients"
 
-	id = Column(Integer, primary_key=True, index=True)
+	id = Column(Integer, primary_key=True, index=True, autoincrement=True)
 	name = Column(String, unique=True, index=True, nullable=False)
 	created_at = Column(DateTime, default=func.now())
 
