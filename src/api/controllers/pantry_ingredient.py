@@ -5,20 +5,20 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 from fastapi import HTTPException, status, Response, Depends
 
-from src.api.models.user import User as Model
-from src.api.schemas.user import UserCreate
+from src.api.models.pantry_ingredient import PantryIngredient as Model
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 def create(db: Session, request):
     if not request.id:
         request.id = None
 
     new_item = Model(
-        username = request.username,
-        email = request.email,
-        hashed_password = request.hashed_password,
-        role = request.role
+        user_id=request.user_id,
+        ingredient_id=request.ingredient_id,
+        quantity=request.quantity,
+        unit=request.unit
     )
 
     try:
@@ -31,6 +31,7 @@ def create(db: Session, request):
 
     return new_item
 
+
 def read_all(db: Session, skip: int = 0, limit: int = 100) -> List[type[Model]]:
     try:
         result = db.query(Model).offset(skip).limit(limit).all()
@@ -39,23 +40,12 @@ def read_all(db: Session, skip: int = 0, limit: int = 100) -> List[type[Model]]:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return result
 
-def read_one(db: Session, id: Optional[int] = None, username: Optional[str] = None, email: Optional[str] = None):
 
-    if id is None and username is None and email is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Provide exactly one of: id, username, email.")
-
-    searching = False
-    if id is not None:
-        searching = Model.id == id
-    elif username is not None:
-        searching = Model.username == username
-    else:
-        searching = Model.email == email
-
+def read_one(db: Session, id):
     try:
-        item = db.query(Model).filter(searching).first()
+        item = db.query(Model).filter(Model.id == id).first()
         if not item:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="ID/username/email not found!")
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
@@ -75,6 +65,7 @@ def update(db: Session, id, request):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return item.first()
 
+
 def delete(db: Session, id):
     try:
         item = db.query(Model).filter(Model.id == id)
@@ -86,17 +77,4 @@ def delete(db: Session, id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
-
-def authenticate_user(db: Session, uname: str, password: str) -> Optional[Model]:
-    #Verify username/password and return the user on success, otherwise False/None.
-    try:
-        user = read_one(db, username=uname)
-        if not user:
-            return None
-        if not pwd_context.verify(password, user.hashed_password):
-            return None
-    except SQLAlchemyError as e:
-        error = str(e.__dict__['orig'])
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return user
 
