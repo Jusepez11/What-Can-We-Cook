@@ -1,6 +1,7 @@
 import enum
 
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, func, Enum
+from sqlalchemy.orm import relationship
 
 from src.api.dependencies.database import Base
 
@@ -23,6 +24,8 @@ class User(Base):
 	is_active = Column(Boolean, default=True, nullable=False)
 	created_at = Column(DateTime, default=func.now())
 	role = Column(Enum(Role), default=Role.User, nullable=False)
+
+	pantries = relationship("PantryIngredient", back_populates="user")
 
 	def __repr__(self) -> str:
 		"""Readable representation useful in logs/debugging"""

@@ -10,7 +10,7 @@ from src.api.dependencies.database import get_db
 from src.api.schemas.user import User, UserCreate
 from src.api.util.auth import create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES, get_current_active_user
 
-router = APIRouter(tags=["root"])
+router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 @router.post("/login", response_model=dict)
@@ -41,15 +41,15 @@ async def register_user(user: UserCreate, db: Session = Depends(get_db)):
 	Returns the newly created user's public data.
 	"""
 	# Check if user already exists
-	db_user = user_controller.get_user_by_username(db, username=user.username)
+	db_user = user_controller.read_user_by_username(db, username=user.username)
 	if db_user:
 		raise HTTPException(status_code=400, detail="Username already registered")
 
-	db_user = user_controller.get_user_by_email(db, email=user.email)
+	db_user = user_controller.read_user_by_email(db, email=user.email)
 	if db_user:
 		raise HTTPException(status_code=400, detail="Email already registered")
 
-	new_user = user_controller.create_user(db=db, user=user)
+	new_user = user_controller.create(db=db, user=user)
 	return User(
 		username=new_user.username,
 		email=new_user.email,

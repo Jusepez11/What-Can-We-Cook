@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from src.api.dependencies.database import Base, engine
-from src.api.routers import root as root_router
+from src.api.routers import index
 
 app = FastAPI()
 
@@ -19,4 +19,4 @@ app.add_middleware(
 # Ensure DB tables are created (SQLAlchemy models bound to Base)
 Base.metadata.create_all(bind=engine)
 
-app.include_router(root_router.router)
+index.load_routes(app)

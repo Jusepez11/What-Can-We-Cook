@@ -2,18 +2,22 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+
 class IngredientBase(BaseModel):
-    name: str
+	name: str
+
 
 class IngredientCreate(IngredientBase):
-    pass
+	pass
+
 
 class IngredientUpdate(BaseModel):
-    name: Optional[str] = None
+	name: Optional[str] = None
+
 
 class IngredientRead(IngredientBase):
-    id: int
+	id: int
 
-    model_config = {
-        "from_attributes": True
-    }
+	model_config = {
+		"from_attributes": True
+	}
