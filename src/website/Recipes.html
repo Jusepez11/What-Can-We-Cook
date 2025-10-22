@@ -6,7 +6,8 @@
   <title>Recipes • What Can We Cook</title>
   <link rel="icon" type="image/png" href="image/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="stylesheet.css" />
+  <link rel="stylesheet" href="css/stylesheet.css" />
+  <script src="js/search.js" defer></script>
 </head>
 <body>
   <header>
@@ -31,14 +32,14 @@
     
 <section class="hero">
   <h1>Recipes</h1>
-  <p class="muted">(A simple grid of recipes. Images are placeholders - will think of something different to be in here).</p>
+  <p class="muted">Search by recipe name, description, or ingredients below.</p>
   <div class="search">
-    <input type="text" placeholder="Filter recipes (not functional atm need script)" />
-    <button type="button">Go</button>
+    <input type="text" placeholder="Search recipes or type an ingredient" />
+    <button type="button">Search</button>
   </div>
 </section>
 <section>
-  <div class="grid auto">
+  <div class="grid auto" id="searchResults">
     <a class="card" href="RecipeDetail.html"><img src="image/recipes.png" alt=""><h3>Veggie Pasta</h3><p class="muted">20 min</p></a>
     <a class="card" href="RecipeDetail.html"><img src="image/recipes.png" alt=""><h3>One Pan Chicken</h3><p class="muted">30 min</p></a>
     <a class="card" href="RecipeDetail.html"><img src="image/recipes.png" alt=""><h3>Overnight Oats</h3><p class="muted">5 min</p></a>

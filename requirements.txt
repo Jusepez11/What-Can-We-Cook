@@ -8,3 +8,5 @@ pytest
 passlib
 python-jose[cryptography]
 python-multipart
+fuzzywuzzy
+python-Levenshtein

@@ -9,7 +9,7 @@ class RecipeBase(BaseModel):
 	instructions: str
 	ingredient_id_list: str
 	servings: int
-	video_embed_url: str
+	video_embed_url: Optional[str] = None
 
 
 class RecipeCreate(RecipeBase):

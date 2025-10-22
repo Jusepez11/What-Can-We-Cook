@@ -4,8 +4,10 @@ from fastapi import HTTPException, status, Response
 from passlib.context import CryptContext
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
+from fuzzywuzzy import fuzz
 
 from src.api.models.recipe import Recipe as Model
+from src.api.models.ingredient import Ingredient
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -80,3 +82,55 @@ def delete(db: Session, id):
 		error = str(e.__dict__['orig'])
 		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 	return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+def search(db: Session, query: str, threshold: int = 60) -> List[type[Model]]:
+	"""
+	Search recipes by title, description, or ingredients using fuzzy matching.
+	Returns recipes sorted by relevance score.
+	"""
+	try:
+		# Get all recipes
+		all_recipes = db.query(Model).all()
+
+		# Get all ingredients for ingredient-based search
+		all_ingredients = db.query(Ingredient).all()
+		ingredient_map = {str(ing.id): ing.name for ing in all_ingredients}
+
+		results = []
+
+		for recipe in all_recipes:
+			# Calculate fuzzy match scores for different fields
+			title_score = fuzz.partial_ratio(query.lower(), recipe.title.lower())
+			description_score = fuzz.partial_ratio(query.lower(), recipe.description.lower() if recipe.description else "")
+
+			# Check ingredient matches
+			ingredient_ids = recipe.ingredient_id_list.split(',') if recipe.ingredient_id_list else []
+			ingredient_score = 0
+			for ing_id in ingredient_ids:
+				ing_id = ing_id.strip()
+				if ing_id in ingredient_map:
+					ing_name = ingredient_map[ing_id]
+					score = fuzz.partial_ratio(query.lower(), ing_name.lower())
+					ingredient_score = max(ingredient_score, score)
+
+			# Take the maximum score from all fields
+			max_score = max(title_score, description_score, ingredient_score)
+
+			# Only include if above threshold
+			if max_score >= threshold:
+				results.append({
+					'recipe': recipe,
+					'score': max_score
+				})
+
+		# Sort by score (highest first)
+		results.sort(key=lambda x: x['score'], reverse=True)
+
+		# Return just the recipes
+		return [r['recipe'] for r in results]
+
+	except SQLAlchemyError as e:
+		error = str(e.__dict__['orig'])
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
