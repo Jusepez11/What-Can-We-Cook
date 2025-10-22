@@ -12,7 +12,7 @@ class Ingredient(Base):
 	name = Column(String, unique=True, index=True, nullable=False)
 	created_at = Column(DateTime, default=func.now())
 
-	pantries = relationship("PantryIngredient", back_populates="ingredient")
+	pantry_ingredients = relationship("src.api.models.pantry_ingredient.PantryIngredient", back_populates="ingredient")
 
 	def __repr__(self) -> str:
 		"""Readable representation useful in logs/debugging"""

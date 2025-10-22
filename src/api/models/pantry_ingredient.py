@@ -7,7 +7,7 @@ from src.api.dependencies.database import Base
 class PantryIngredient(Base):
 	"""SQLAlchemy Pantry model representing an ingredient in a user's pantry."""
 
-	__tablename__ = "pantries"
+	__tablename__ = "pantry_ingredients"
 
 	id = Column(Integer, primary_key=True, index=True)
 	user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
@@ -17,8 +17,8 @@ class PantryIngredient(Base):
 	created_at = Column(DateTime, default=func.now())
 	updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
-	user = relationship("User", back_populates="pantries")
-	ingredient = relationship("Ingredient", back_populates="pantries")
+	user = relationship("src.api.models.user.User", back_populates="pantry_ingredients")
+	ingredient = relationship("src.api.models.ingredient.Ingredient", back_populates="pantry_ingredients")
 
 	def __repr__(self) -> str:
 		"""Readable representation useful in logs/debugging"""

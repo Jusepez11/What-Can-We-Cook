@@ -25,7 +25,7 @@ class User(Base):
 	created_at = Column(DateTime, default=func.now())
 	role = Column(Enum(Role), default=Role.User, nullable=False)
 
-	pantries = relationship("PantryIngredient", back_populates="user")
+	pantry_ingredients = relationship("src.api.models.pantry_ingredient.PantryIngredient", back_populates="user")
 
 	def __repr__(self) -> str:
 		"""Readable representation useful in logs/debugging"""
