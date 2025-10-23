@@ -33,7 +33,17 @@ def create(db: Session, request):
 		error = str(e.__dict__['orig'])
 		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
-	return new_item
+
+def read_recent(db: Session, limit: int = 10) -> List[type[Model]]:
+	"""
+	Get the most recent recipes ordered by creation date.
+	"""
+	try:
+		result = db.query(Model).order_by(Model.created_at.desc()).limit(limit).all()
+	except SQLAlchemyError as e:
+		error = str(e.__dict__['orig'])
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+	return result
 
 
 def read_all(db: Session, skip: int = 0, limit: int = 100) -> List[type[Model]]:

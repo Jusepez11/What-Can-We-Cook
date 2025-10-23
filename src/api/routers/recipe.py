@@ -18,6 +18,11 @@ def read_all(db: Session = Depends(get_db)):
 	return controller.read_all(db)
 
 
+@router.get("/recent/", response_model=list[RecipeRead])
+def read_recent(limit: int = 10, db: Session = Depends(get_db)):
+	return controller.read_recent(db, limit)
+
+
 @router.get("/search/", response_model=list[RecipeRead])
 def search(query: str, threshold: int = 60, db: Session = Depends(get_db)):
 	return controller.search(db, query, threshold)

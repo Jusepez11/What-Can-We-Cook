@@ -92,6 +92,71 @@ function displaySearchResults(recipes, containerId, query) {
 }
 
 /**
+ * Load recent recipes from the API
+ * @param {string} containerId - ID of the container to display results
+ * @param {number} limit - Number of recent recipes to fetch
+ */
+async function loadRecentRecipes(containerId, limit = 10) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/recipes/recent/?limit=${limit}`);
+
+        if (!response.ok) {
+            throw new Error(`Failed to load recipes: ${response.statusText}`);
+        }
+
+        const recipes = await response.json();
+
+        const container = document.getElementById(containerId);
+        if (!container) {
+            console.error('Results container not found');
+            return;
+        }
+
+        // Clear existing results
+        container.innerHTML = '';
+
+        if (recipes.length === 0) {
+            container.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <h3>No recipes available yet</h3>
+                    <p class="muted">Be the first to submit a recipe!</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Display each recipe
+        recipes.forEach(recipe => {
+            const card = document.createElement('a');
+            card.className = 'card';
+            card.href = `RecipeDetail.html?id=${recipe.id}`;
+
+            const servingsText = recipe.servings ? `${recipe.servings} servings` : '';
+
+            card.innerHTML = `
+                <img src="image/recipes.png" alt="${recipe.title}">
+                <h3>${recipe.title}</h3>
+                <p class="muted">${servingsText}</p>
+                ${recipe.description ? `<p style="margin-top: 8px; font-size: 14px;">${recipe.description.substring(0, 100)}${recipe.description.length > 100 ? '...' : ''}</p>` : ''}
+            `;
+
+            container.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Error loading recent recipes:', error);
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                    <h3>Unable to load recipes</h3>
+                    <p class="muted">Please make sure the API server is running.</p>
+                </div>
+            `;
+        }
+    }
+}
+
+/**
  * Initialize search functionality on page load
  */
 function initializeSearch() {
@@ -147,6 +212,9 @@ function initializeSearch() {
             } catch (error) {
                 console.error('Error loading stored results:', error);
             }
+        } else {
+            // Load recent recipes by default if no search results
+            loadRecentRecipes('searchResults', 10);
         }
     }
 }
