@@ -21,7 +21,7 @@ class UserCreate(BaseModel):
 	"""Payload used to create a new user account."""
 	username: str
 	email: str
-	password: str
+	hashed_password: str
 
 	model_config = {
 		"from_attributes": True
