@@ -4,11 +4,12 @@ from sqlalchemy.orm import Session
 from src.api.controllers import ingredient as controller
 from src.api.dependencies.database import get_db
 from src.api.schemas.ingredient import IngredientCreate, IngredientUpdate, IngredientRead
+from src.api.util.auth import get_current_active_user
 
 router = APIRouter(prefix="/ingredient", tags=["Ingredients"])
 
 
-@router.post("/", response_model=IngredientRead)
+@router.post("/", response_model=IngredientRead, dependencies=[Depends(get_current_active_user)])
 def create(request: IngredientCreate, db: Session = Depends(get_db)):
 	return controller.create(db, request)
 
@@ -23,11 +24,11 @@ def read_one(ingredient_id: int, db: Session = Depends(get_db)):
 	return controller.read_one(db, ingredient_id)
 
 
-@router.put("/{ingredient_id}", response_model=IngredientRead)
+@router.put("/{ingredient_id}", response_model=IngredientRead, dependencies=[Depends(get_current_active_user)])
 def update(ingredient_id: int, request: IngredientUpdate, db: Session = Depends(get_db)):
 	return controller.update(db, ingredient_id, request)
 
 
-@router.delete("/{ingredient_id}")
+@router.delete("/{ingredient_id}", dependencies=[Depends(get_current_active_user)])
 def delete(ingredient_id: int, db: Session = Depends(get_db)):
 	return controller.delete(db, ingredient_id)

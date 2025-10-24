@@ -4,8 +4,13 @@ from sqlalchemy.orm import Session
 from src.api.controllers import pantry_ingredient as controller
 from src.api.dependencies.database import get_db
 from src.api.schemas.pantry_ingredient import PantryIngredientCreate, PantryIngredientUpdate, PantryIngredientRead
+from src.api.util.auth import get_current_active_user
 
-router = APIRouter(prefix="/pantryingredient", tags=["Pantry Ingredient"])
+router = APIRouter(
+	prefix="/pantryingredient",
+	tags=["Pantry Ingredient"],
+	dependencies=[Depends(get_current_active_user)]
+)
 
 
 @router.post("/", response_model=PantryIngredientRead)
