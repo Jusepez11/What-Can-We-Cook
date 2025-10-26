@@ -1,13 +1,12 @@
 from typing import List
 
 from fastapi import HTTPException, status, Response
-from passlib.context import CryptContext
+from fuzzywuzzy import fuzz
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
-from fuzzywuzzy import fuzz
 
-from src.api.models.recipe import Recipe as Model
 from src.api.models.ingredient import Ingredient
+from src.api.models.recipe import Recipe as Model
 
 
 def create(db: Session, request):
@@ -110,7 +109,8 @@ def search(db: Session, query: str, threshold: int = 60) -> List[type[Model]]:
 		for recipe in all_recipes:
 			# Calculate fuzzy match scores for different fields
 			title_score = fuzz.partial_ratio(query.lower(), recipe.title.lower())
-			description_score = fuzz.partial_ratio(query.lower(), recipe.description.lower() if recipe.description else "")
+			description_score = fuzz.partial_ratio(query.lower(),
+			                                       recipe.description.lower() if recipe.description else "")
 
 			# Check ingredient matches
 			ingredient_ids = recipe.ingredient_id_list.split(',') if recipe.ingredient_id_list else []
@@ -141,4 +141,3 @@ def search(db: Session, query: str, threshold: int = 60) -> List[type[Model]]:
 	except SQLAlchemyError as e:
 		error = str(e.__dict__['orig'])
 		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-

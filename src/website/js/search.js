@@ -170,8 +170,8 @@ function initializeSearch() {
 
     // Determine if we're on the home page or recipes page
     const isHomePage = window.location.pathname.includes('index.html') ||
-                       window.location.pathname.endsWith('/') ||
-                       window.location.pathname === '';
+        window.location.pathname.endsWith('/') ||
+        window.location.pathname === '';
 
     // Handle search button click
     searchButton.addEventListener('click', () => {

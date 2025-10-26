@@ -24,7 +24,7 @@ async function fetchIngredient(ingredientId) {
         return await response.json();
     } catch (error) {
         console.error(`Error fetching ingredient ${ingredientId}:`, error);
-        return { id: ingredientId, name: 'Unknown ingredient' };
+        return {id: ingredientId, name: 'Unknown ingredient'};
     }
 }
 

@@ -50,8 +50,10 @@ function showModal(options) {
         type = 'confirm',
         confirmText = 'Confirm',
         cancelText = 'Cancel',
-        onConfirm = () => {},
-        onCancel = () => {},
+        onConfirm = () => {
+        },
+        onCancel = () => {
+        },
         fields = []
     } = options;
 
@@ -210,7 +212,7 @@ async function createIngredient(name) {
         const response = await fetch(`${API_BASE_URL}/ingredient/`, {
             method: 'POST',
             headers: getAuthHeaders(),
-            body: JSON.stringify({ name: name.trim() })
+            body: JSON.stringify({name: name.trim()})
         });
 
         if (!response.ok) {

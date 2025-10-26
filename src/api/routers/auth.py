@@ -73,4 +73,3 @@ async def get_current_user_info(current_user: User = Depends(get_current_active_
 		raise HTTPException(status_code=404, detail="User not found")
 
 	return UserRead.model_validate(db_user)
-

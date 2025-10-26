@@ -1,95 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sign up • What Can We Cook</title>
-  <link rel="icon" type="image/png" href="image/favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/stylesheet.css" />
-  <style>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Sign up • What Can We Cook</title>
+    <link rel="icon" type="image/png" href="image/favicon.png"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/stylesheet.css"/>
+    <style>
 
-  </style>
+    </style>
 </head>
 <body>
-  <header>
+<header>
     <div class="wrap bar">
-      <a class="brand" href="index.html">
-        <img src="image/logo.png" alt="Logo" width="28" height="28" />
-        <span>What Can We Cook</span>
-      </a>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="Recipes.html">Recipes</a>
-        <a href="Browse.html">Browse</a>
-        <a href="Favorites.html">Favorites</a>
-        <a href="MyPantry.html">My Pantry</a>
-        <a href="Community.html">Community</a>
-        <a href="Login.html">Login</a>
-        <a href="Signup.html">Sign Up</a>
-        <a href="SubmitRecipe.html" class="btn">Submit</a>
-      </nav>
+        <a class="brand" href="index.html">
+            <img src="image/logo.png" alt="Logo" width="28" height="28"/>
+            <span>What Can We Cook</span>
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="Recipes.html">Recipes</a>
+            <a href="Browse.html">Browse</a>
+            <a href="Favorites.html">Favorites</a>
+            <a href="MyPantry.html">My Pantry</a>
+            <a href="Community.html">Community</a>
+            <a href="Login.html">Login</a>
+            <a href="Signup.html">Sign Up</a>
+            <a href="SubmitRecipe.html" class="btn">Submit</a>
+        </nav>
     </div>
-  </header>
+</header>
 
-  <main class="wrap">
+<main class="wrap">
     <section class="auth">
-      <div class="auth-card">
-        <h1>Create your account</h1>
-        <p class="muted mb">Save favorites, manage your pantry, and share recipes.</p>
+        <div class="auth-card">
+            <h1>Create your account</h1>
+            <p class="muted mb">Save favorites, manage your pantry, and share recipes.</p>
 
-        <form id="signupForm" action="index.html" method="POST" novalidate>
-          <div class="input-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="John Doe" />
-            <small class="error" id="usernameError"></small>
-          </div>
+            <form id="signupForm" action="index.html" method="POST" novalidate>
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="John Doe"/>
+                    <small class="error" id="usernameError"></small>
+                </div>
 
-          <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="you@example.com" />
-            <small class="error" id="emailError"></small>
-          </div>
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com"/>
+                    <small class="error" id="emailError"></small>
+                </div>
 
-          <div class="pw-row">
-            <div class="input-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" placeholder="At least 6 characters" />
-              <div class="strength" aria-hidden="true"><span id="pwBar"></span></div>
-              <small class="error" id="passwordError"></small>
-            </div>
+                <div class="pw-row">
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="At least 6 characters"/>
+                        <div class="strength" aria-hidden="true"><span id="pwBar"></span></div>
+                        <small class="error" id="passwordError"></small>
+                    </div>
 
-            <div class="input-group">
-              <label for="confirm">Confirm</label>
-              <input type="password" id="confirm" name="confirm" placeholder="Repeat password" />
-              <small class="error" id="confirmError"></small>
-            </div>
-          </div>
+                    <div class="input-group">
+                        <label for="confirm">Confirm</label>
+                        <input type="password" id="confirm" name="confirm" placeholder="Repeat password"/>
+                        <small class="error" id="confirmError"></small>
+                    </div>
+                </div>
 
-          <label class="checkbox terms mb-lg">
-            <input type="checkbox" id="terms" name="terms" />
-            <span>I agree to the <a class="link" href="#">Terms</a> and <a class="link" href="#">Privacy</a></span>
-          </label>
+                <label class="checkbox terms mb-lg">
+                    <input type="checkbox" id="terms" name="terms"/>
+                    <span>I agree to the <a class="link" href="#">Terms</a> and <a class="link"
+                                                                                   href="#">Privacy</a></span>
+                </label>
 
-          <button type="submit" class="btn primary full">Create account</button>
+                <button type="submit" class="btn primary full">Create account</button>
 
-          <p class="muted center mt">Already have an account? <a class="link" href="Login.html">Login</a></p>
-        </form>
-      </div>
+                <p class="muted center mt">Already have an account? <a class="link" href="Login.html">Login</a></p>
+            </form>
+        </div>
     </section>
-  </main>
+</main>
 
-  <footer>
+<footer>
     <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-      <p class="small">© 2025 What Can We Cook</p>
-      <div class="row">
-        <a class="btn" href="Community.html">Community</a>
-        <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
-      </div>
+        <p class="small">© 2025 What Can We Cook</p>
+        <div class="row">
+            <a class="btn" href="Community.html">Community</a>
+            <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
+        </div>
     </div>
-  </footer>
+</footer>
 
-  <script src="js/auth.js"></script>
-  <script src="js/signup.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/signup.js"></script>
 </body>
 </html>

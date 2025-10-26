@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_register_user(client, test_seed_data):
 	new_user = {
 		"username": "test1",

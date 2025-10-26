@@ -1,10 +1,9 @@
 from typing import List
 
 from fastapi import HTTPException, status, Response
-from passlib.context import CryptContext
+from fuzzywuzzy import fuzz
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
-from fuzzywuzzy import fuzz
 
 from src.api.models.ingredient import Ingredient as Model
 

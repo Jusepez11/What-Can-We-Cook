@@ -1,4 +1,5 @@
 import os
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -6,9 +7,8 @@ os.environ.setdefault("DATABASE_URL", "sqlite:///:memory:")
 
 from src.api.dependencies.database import SessionLocal, engine, Base
 from src.api.main import app
-from src.api.models import User, Ingredient, Recipe, PantryIngredient
+from src.api.models import Ingredient, Recipe
 from src.api.seed import seed_if_needed
-
 
 access_token = None
 

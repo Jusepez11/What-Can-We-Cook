@@ -1,106 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MyPantry • What Can We Cook</title>
-  <link rel="icon" type="image/png" href="image/favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/stylesheet.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>MyPantry • What Can We Cook</title>
+    <link rel="icon" type="image/png" href="image/favicon.png"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/stylesheet.css"/>
 </head>
 <body>
-  <header>
+<header>
     <div class="wrap bar">
-      <a class="brand" href="index.html">
-        <img src="image/logo.png" alt="Logo" width="28" height="28" />
-        <span>What Can We Cook</span>
-      </a>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="Recipes.html">Recipes</a>
-        <a href="Browse.html">Browse</a>
-        <a href="Favorites.html">Favorites</a>
-        <a href="MyPantry.html">My Pantry</a>
-        <a href="Community.html">Community</a>
-        <a href="Login.html">Login</a>
-        <a href="Signup.html">Sign Up</a>
-        <a href="SubmitRecipe.html" class="btn">Submit</a>
-      </nav>
+        <a class="brand" href="index.html">
+            <img src="image/logo.png" alt="Logo" width="28" height="28"/>
+            <span>What Can We Cook</span>
+        </a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="Recipes.html">Recipes</a>
+            <a href="Browse.html">Browse</a>
+            <a href="Favorites.html">Favorites</a>
+            <a href="MyPantry.html">My Pantry</a>
+            <a href="Community.html">Community</a>
+            <a href="Login.html">Login</a>
+            <a href="Signup.html">Sign Up</a>
+            <a href="SubmitRecipe.html" class="btn">Submit</a>
+        </nav>
     </div>
-  </header>
+</header>
 
-  <main class="wrap">
+<main class="wrap">
 
-      <section class="hero">
-          <h1>My Pantry</h1>
-          <p class="muted">Manage your ingredients and see what you have at home.</p>
-      </section>
+    <section class="hero">
+        <h1>My Pantry</h1>
+        <p class="muted">Manage your ingredients and see what you have at home.</p>
+    </section>
 
-      <section class="pantry-container">
-          <!-- Add Ingredient Form -->
-          <div class="card">
-              <h3>Add Ingredient</h3>
-              <div class="form-row" style="margin-top: 16px;">
-                  <div class="form-group">
-                      <label for="ingredientNameInput">Ingredient Name</label>
-                      <input type="text" id="ingredientNameInput" placeholder="Start typing to search..." autocomplete="off">
-                  </div>
-                  <div class="form-group">
-                      <label for="quantityInput">Quantity</label>
-                      <input type="text" id="quantityInput" placeholder="e.g., 2">
-                  </div>
-                  <div class="form-group">
-                      <label for="unitInput">Unit</label>
-                      <input type="text" id="unitInput" placeholder="e.g., cups">
-                  </div>
-                  <div class="form-group">
-                      <label>&nbsp;</label>
-                      <button id="addIngredientBtn" class="btn primary">Add</button>
-                  </div>
-              </div>
-          </div>
+    <section class="pantry-container">
+        <!-- Add Ingredient Form -->
+        <div class="card">
+            <h3>Add Ingredient</h3>
+            <div class="form-row" style="margin-top: 16px;">
+                <div class="form-group">
+                    <label for="ingredientNameInput">Ingredient Name</label>
+                    <input type="text" id="ingredientNameInput" placeholder="Start typing to search..."
+                           autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="quantityInput">Quantity</label>
+                    <input type="text" id="quantityInput" placeholder="e.g., 2">
+                </div>
+                <div class="form-group">
+                    <label for="unitInput">Unit</label>
+                    <input type="text" id="unitInput" placeholder="e.g., cups">
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button id="addIngredientBtn" class="btn primary">Add</button>
+                </div>
+            </div>
+        </div>
 
-          <!-- Pantry Table -->
-          <div class="card">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                  <h3>Your Pantry</h3>
-                  <input type="text" id="pantrySearchInput" placeholder="Search your pantry..." style="max-width: 300px;">
-              </div>
+        <!-- Pantry Table -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3>Your Pantry</h3>
+                <input type="text" id="pantrySearchInput" placeholder="Search your pantry..." style="max-width: 300px;">
+            </div>
 
-              <div id="emptyPantryState" class="empty-state" style="display: none;">
-                  <p>Your pantry is empty!</p>
-                  <p class="small muted">Add ingredients above to get started.</p>
-              </div>
+            <div id="emptyPantryState" class="empty-state" style="display: none;">
+                <p>Your pantry is empty!</p>
+                <p class="small muted">Add ingredients above to get started.</p>
+            </div>
 
-              <table id="pantryTable" class="pantry-table">
-                  <thead>
-                  <tr>
-                      <th>Ingredient</th>
-                      <th>Quantity</th>
-                      <th>Unit</th>
-                      <th>Actions</th>
-                  </tr>
-                  </thead>
-                  <tbody id="pantryTableBody">
-                  <!-- Populated by JavaScript -->
-                  </tbody>
-              </table>
-          </div>
-      </section>
+            <table id="pantryTable" class="pantry-table">
+                <thead>
+                <tr>
+                    <th>Ingredient</th>
+                    <th>Quantity</th>
+                    <th>Unit</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="pantryTableBody">
+                <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-  </main>
+</main>
 
-  <footer>
+<footer>
     <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-      <p class="small">© 2025 What Can We Cook</p>
-      <div class="row">
-        <a class="btn" href="Community.html">Community</a>
-        <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
-      </div>
+        <p class="small">© 2025 What Can We Cook</p>
+        <div class="row">
+            <a class="btn" href="Community.html">Community</a>
+            <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
+        </div>
     </div>
-  </footer>
+</footer>
 
-  <script src="js/auth.js"></script>
-  <script src="js/pantry.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/pantry.js"></script>
 </body>
 </html>
