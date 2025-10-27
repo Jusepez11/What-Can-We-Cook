@@ -6,12 +6,12 @@ from sqlalchemy.orm import Session
 
 from src.api.models.user import User as Model
 from src.api.schemas.user import UserCreate, UserUpdate
-from src.api.util.auth import pwd_context
+from src.api.util.auth import hash_password, verify_password
 
 
 def create(db: Session, request: UserCreate):
 	"""Create a new user record with a hashed password and return it."""
-	hashed_password = pwd_context.hash(request.password)
+	hashed_password = hash_password(request.password)
 	new_item = Model(
 		username=request.username,
 		email=request.email,
@@ -104,7 +104,7 @@ def authenticate_user(db: Session, username: str, password: str) -> Optional[Mod
 	if not user:
 		return None
 
-	if not pwd_context.verify(password, user.hashed_password):
+	if not verify_password(password, user.hashed_password):
 		return None
 
 	return user

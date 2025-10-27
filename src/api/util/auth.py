@@ -2,10 +2,11 @@ import os
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Dict
 
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
 from src.api.controllers import user as user_controller
@@ -18,8 +19,27 @@ SECRET_KEY = os.getenv("AUTH_SECRET_KEY", "dev-secret")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+
+# Argon2 password hasher with secure defaults
+ph = PasswordHasher()
+
+
+def hash_password(password: str) -> str:
+	"""Hash a password using Argon2."""
+	return ph.hash(password)
+
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+	"""Verify a password against an Argon2 hash.
+
+	Returns True if the password matches, False otherwise.
+	"""
+	try:
+		ph.verify(hashed_password, plain_password)
+		return True
+	except VerifyMismatchError:
+		return False
 
 
 def convert_db_user_to_user(db_user: UserModel) -> UserSchema:
@@ -59,6 +79,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 
 	Raises HTTP 401 if the token is invalid or the user does not exist.
 	"""
+
 	credentials_exception = HTTPException(
 		status_code=status.HTTP_401_UNAUTHORIZED,
 		detail="Could not validate credentials",

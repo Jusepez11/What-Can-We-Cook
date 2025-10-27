@@ -7,7 +7,7 @@ sqlalchemy
 httpx
 pytest
 pytest-dependency
-passlib[bcrypt]
+argon2-cffi
 python-jose[cryptography]
 python-multipart
 fuzzywuzzy

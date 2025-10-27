@@ -3,7 +3,7 @@ from src.api.models import User, Role
 from src.api.models.ingredient import Ingredient
 from src.api.models.recipe import Recipe
 from src.api.models.pantry_ingredient import PantryIngredient
-from src.api.util.auth import pwd_context
+from src.api.util.auth import hash_password
 
 
 def seed_if_needed():
@@ -172,7 +172,7 @@ def seed_if_needed():
 		test_user = User(
 			username="test",
 			email="test@mail.com",
-			hashed_password=pwd_context.hash("testpassword")
+			hashed_password=hash_password("testpassword")
 		)
 		db.add(test_user)
 		db.commit()
@@ -181,7 +181,7 @@ def seed_if_needed():
 		test_user = User(
 			username="testadmin",
 			email="testadmin@mail.com",
-			hashed_password=pwd_context.hash("testadminpassword"),
+			hashed_password=hash_password("testadminpassword"),
 			role=Role.Administrator
 		)
 		db.add(test_user)
