@@ -7,7 +7,7 @@ from src.api.controllers import pantry_ingredient as controller
 from src.api.dependencies.database import get_db
 from src.api.schemas.pantry_ingredient import PantryIngredientCreate, PantryIngredientUpdate, PantryIngredientRead
 from src.api.schemas.user import User as UserSchema
-from src.api.util.auth import get_current_active_user
+from src.api.util.auth import get_current_active_user, get_current_active_admin_user
 
 router = APIRouter(
 	prefix="/pantryingredient",
@@ -49,11 +49,11 @@ def read_one(pantry_ingredient_id: int, db: Session = Depends(get_db)):
 	return controller.read_one(db, pantry_ingredient_id)
 
 
-@router.put("/{pantry_ingredient_id}", response_model=PantryIngredientRead)
+@router.put("/{pantry_ingredient_id}", response_model=PantryIngredientRead, dependencies=[Depends(get_current_active_user)])
 def update(pantry_ingredient_id: int, request: PantryIngredientUpdate, db: Session = Depends(get_db)):
 	return controller.update(db, pantry_ingredient_id, request)
 
 
-@router.delete("/{pantry_ingredient_id}")
+@router.delete("/{pantry_ingredient_id}", dependencies=[Depends(get_current_active_admin_user)])
 def delete(pantry_ingredient_id: int, db: Session = Depends(get_db)):
 	return controller.delete(db, pantry_ingredient_id)
