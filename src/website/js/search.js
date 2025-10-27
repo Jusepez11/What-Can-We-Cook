@@ -73,15 +73,13 @@ function displaySearchResults(recipes, containerId, query) {
     recipes.forEach(recipe => {
         const card = document.createElement('a');
         card.className = 'card';
-        card.href = `RecipeDetail.html?id=${recipe.id}`;    // TODO: actually implement recipe details page
+        card.href = `RecipeDetail.html?id=${recipe.id}`;
 
         // Extract first ingredient or use placeholder
-        // TODO: sample information... needs adjusted based on what is actually returned. dependent on test data
-        const ingredientIds = recipe.ingredient_id_list ? recipe.ingredient_id_list.split(',') : [];
         const servingsText = recipe.servings ? `${recipe.servings} servings` : '';
 
         card.innerHTML = `
-            <img src="image/recipes.png" alt="${recipe.title}">
+            <img src="${recipe.image_url}" alt="${recipe.title}" width="180" height="180" style="object-fit: cover; display: block; margin: 0 auto;">
             <h3>${recipe.title}</h3>
             <p class="muted">${servingsText}</p>
             ${recipe.description ? `<p style="margin-top: 8px; font-size: 14px;">${recipe.description.substring(0, 100)}${recipe.description.length > 100 ? '...' : ''}</p>` : ''}
@@ -134,7 +132,7 @@ async function loadRecentRecipes(containerId, limit = 10) {
             const servingsText = recipe.servings ? `${recipe.servings} servings` : '';
 
             card.innerHTML = `
-                <img src="image/recipes.png" alt="${recipe.title}">
+                <img src="${recipe.image_url}" alt="${recipe.title}" width="180" height="180" style="object-fit: cover; display: block; margin: 0 auto;">
                 <h3>${recipe.title}</h3>
                 <p class="muted">${servingsText}</p>
                 ${recipe.description ? `<p style="margin-top: 8px; font-size: 14px;">${recipe.description.substring(0, 100)}${recipe.description.length > 100 ? '...' : ''}</p>` : ''}
@@ -194,6 +192,11 @@ function initializeSearch() {
             }
         }
     });
+
+    // Load recent recipes on home page
+    if (isHomePage) {
+        loadRecentRecipes('recentRecipes', 3);
+    }
 
     // On Recipes.html, check if there are stored search results from a redirect or previous search
     if (!isHomePage) {

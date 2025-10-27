@@ -98,9 +98,17 @@ async function displayRecipe(recipe) {
     const gridColumns = hasVideo ? '1fr 1fr .8fr' : '1.2fr .8fr';
     contentSection.style.gridTemplateColumns = gridColumns;
 
+    const photoSection = document.getElementById('recipe-photo-section');
+    photoSection.innerHTML = `
+        <img 
+            src="${recipe.image_url}" 
+            alt="${recipe.title}" 
+            class="recipe-photo"
+        >
+    `;
+
     let contentHtml = `
         <div class="card">
-            <img src="image/recipes.png" alt="${recipe.title}">
             <h3 style="margin-top:12px">Instructions</h3>
             ${instructionsHtml}
         </div>

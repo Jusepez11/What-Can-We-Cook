@@ -78,7 +78,7 @@ def seed_if_needed():
 			ingredient_id_list="1,3,4,10",
 			servings=1,
 			video_embed_url="",
-			image_url="https://www.themealdb.com/images/media/meals/hpusuv1511812960.jpg",
+			image_url="https://essenrezept.de/wp-content/uploads/2020/12/Caprese-Bacon-Ciabatta-Sandwich.jpg",
 		)
 
 		lentil_salad = Recipe(

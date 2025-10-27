@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="image/favicon.png"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="css/stylesheet.css"/>
+    <script src="js/search.js" defer></script>
 </head>
 <body>
 <header>
@@ -87,37 +88,11 @@
 
     <section>
         <div class="section-title">
-            <h2>Popular now</h2>
+            <h2>Recently Added</h2>
             <a class="link" href="Recipes.html">See all</a>
         </div>
-        <div class="grid auto">
-            <article class="card">
-                <img src="image/veggie pasta.jpg" alt="Recipe"/>
-                <h3>Easy veggie pasta</h3>
-                <p class="muted">Ready in 20 minutes</p>
-                <div class="row" style="margin-top:8px">
-                    <span class="chip">Vegetarian</span>
-                    <span class="chip">Quick</span>
-                </div>
-            </article>
-            <article class="card">
-                <img src="image/one pot chicken.jpg" alt="Recipe"/>
-                <h3>One pan chicken</h3>
-                <p class="muted">Family friendly</p>
-                <div class="row" style="margin-top:8px">
-                    <span class="chip">Gluten free</span>
-                    <span class="chip">Meal prep</span>
-                </div>
-            </article>
-            <article class="card">
-                <img src="image/overnight oat.jpg" alt="Recipe"/>
-                <h3>Berry overnight oats</h3>
-                <p class="muted">Grab and go</p>
-                <div class="row" style="margin-top:8px">
-                    <span class="chip">Breakfast</span>
-                    <span class="chip">No cook</span>
-                </div>
-            </article>
+        <div class="grid auto" id="recentRecipes">
+            <!-- Recent recipes will be loaded here dynamically -->
         </div>
     </section>
 
