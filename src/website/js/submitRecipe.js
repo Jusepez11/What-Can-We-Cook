@@ -1,5 +1,3 @@
-// js/submitRecipe.js
-
 /**
  * Get references to the Submit Recipe page elements.
  * Relies on the current structure of SubmitRecipe.html:
@@ -39,7 +37,7 @@ function getSubmitRecipeElements() {
  * @param {"info"|"success"|"error"} [type="info"]
  */
 function showSubmitStatus(message, type = "info") {
-    const { helperText } = getSubmitRecipeElements();
+    const {helperText} = getSubmitRecipeElements();
 
     if (!helperText) {
         console.log(type.toUpperCase() + ":", message);
@@ -63,7 +61,7 @@ function showSubmitStatus(message, type = "info") {
  * @returns {{ title: string, category: string, description: string }}
  */
 function collectSubmitRecipeData() {
-    const { titleInput, categoryInput, descriptionInput } =
+    const {titleInput, categoryInput, descriptionInput} =
         getSubmitRecipeElements();
 
     return {
@@ -151,7 +149,7 @@ async function handleSubmitRecipeClick(event) {
         );
 
         // Clear inputs
-        const { titleInput, categoryInput, descriptionInput } =
+        const {titleInput, categoryInput, descriptionInput} =
             getSubmitRecipeElements();
         if (titleInput) titleInput.value = "";
         if (categoryInput) categoryInput.value = "";
@@ -181,7 +179,7 @@ function initSubmitRecipePage() {
         }
     }
 
-    const { submitButton } = getSubmitRecipeElements();
+    const {submitButton} = getSubmitRecipeElements();
 
     if (!submitButton) {
         console.warn('Submit button not found on SubmitRecipe page.');

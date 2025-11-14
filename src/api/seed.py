@@ -1,8 +1,8 @@
 from src.api.dependencies.database import SessionLocal
 from src.api.models import User, Role
 from src.api.models.ingredient import Ingredient
-from src.api.models.recipe import Recipe
 from src.api.models.pantry_ingredient import PantryIngredient
+from src.api.models.recipe import Recipe
 from src.api.util.auth import hash_password
 
 

@@ -13,7 +13,7 @@ async function searchRecipes(query, resultsContainerId, redirectToRecipes = fals
     }
 
     try {
-        const response = await fetch(`${API_BASE_URL}/recipes/search/?query=${encodeURIComponent(query)}&threshold=60`);
+        const response = await fetch(`${API_BASE_URL}/recipes/search/?query=${encodeURIComponent(query)}&threshold=70`);
 
         if (!response.ok) {
             throw new Error(`Search failed: ${response.statusText}`);

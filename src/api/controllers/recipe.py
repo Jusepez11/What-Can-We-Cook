@@ -10,10 +10,6 @@ from src.api.models.recipe import Recipe as Model
 
 
 def create(db: Session, request):
-	'''
-	if not request.id:
-		request.id = None'''
-
 	new_item = Model(
 		title=request.title,
 		description=request.description,
@@ -21,7 +17,7 @@ def create(db: Session, request):
 		ingredient_id_list=request.ingredient_id_list,
 		servings=request.servings,
 		video_embed_url=request.video_embed_url,
-        image_url=request.image_url,
+		image_url=request.image_url,
 	)
 
 	try:
