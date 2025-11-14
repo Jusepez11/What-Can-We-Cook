@@ -3,6 +3,8 @@ import os
 import pytest
 from fastapi.testclient import TestClient
 
+from src.api.models.category import Category
+
 os.environ.setdefault("DATABASE_URL", "sqlite:///:memory:")
 
 from src.api.dependencies.database import SessionLocal, engine, Base
@@ -65,6 +67,8 @@ def test_ensure_db_nonempty(test_seed_data):
 	db = SessionLocal()
 	ingredient_count = db.query(Ingredient).count()
 	recipe_count = db.query(Recipe).count()
+	category_count = db.query(Category).count()
 	db.close()
 	assert ingredient_count > 0
 	assert recipe_count > 0
+	assert category_count > 0
