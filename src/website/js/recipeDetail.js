@@ -29,6 +29,24 @@ async function fetchIngredient(ingredientId) {
 }
 
 /**
+ * Fetch category details by ID
+ * @param {number} categoryId - Category ID
+ * @returns {Promise<object>} - Category object
+ */
+async function fetchCategory(categoryId) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/categories/${categoryId}`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch category ${categoryId}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error(`Error fetching category ${categoryId}:`, error);
+        return {id: categoryId, name: 'Unknown category'};
+    }
+}
+
+/**
  * Load and display recipe details
  */
 async function loadRecipeDetails() {
@@ -71,21 +89,35 @@ async function loadRecipeDetails() {
  * @param {object} recipe - Recipe object from API
  */
 async function displayRecipe(recipe) {
-    // Update hero section
-    const heroSection = document.querySelector('.hero');
-    const servingsInfo = recipe.servings ? `Serves ${recipe.servings}` : '';
-    const description = recipe.description || '';
-
-    heroSection.innerHTML = `
-        <h1>${recipe.title}</h1>
-        <p class="muted">${servingsInfo}${servingsInfo && description ? ' • ' : ''}${description}</p>
-    `;
-
     // Fetch all ingredients
     const ingredientIds = recipe.ingredient_id_list.split(',').map(id => id.trim()).filter(id => id);
     const ingredients = await Promise.all(
         ingredientIds.map(id => fetchIngredient(parseInt(id)))
     );
+
+    // Fetch all categories
+    const categoryIds = recipe.category_id_list ? recipe.category_id_list.split(',').map(id => id.trim()).filter(id => id) : [];
+    const categories = await Promise.all(
+        categoryIds.map(id => fetchCategory(parseInt(id)))
+    );
+
+    // Update hero section with categories
+    const heroSection = document.querySelector('.hero');
+    const servingsInfo = recipe.servings ? `Serves ${recipe.servings}` : '';
+    const description = recipe.description || '';
+
+    // Build categories HTML
+    const categoriesHtml = categories.length > 0
+        ? `<div style="margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px;">
+            ${categories.map(cat => `<a href="Recipes.html?category=${cat.id}" class="chip" style="text-decoration: none;">${cat.name}</a>`).join('')}
+           </div>`
+        : '';
+
+    heroSection.innerHTML = `
+        <h1>${recipe.title}</h1>
+        <p class="muted">${servingsInfo}${servingsInfo && description ? ' • ' : ''}${description}</p>
+        ${categoriesHtml}
+    `;
 
     // Process instructions - respect newlines
     const instructionsHtml = formatInstructions(recipe.instructions);
@@ -199,4 +231,3 @@ function displayError(message) {
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', loadRecipeDetails);
-

@@ -15,6 +15,7 @@ def create(db: Session, request):
 		description=request.description,
 		instructions=request.instructions,
 		ingredient_id_list=request.ingredient_id_list,
+		category_id_list=request.category_id_list,
 		servings=request.servings,
 		video_embed_url=request.video_embed_url,
 		image_url=request.image_url,
@@ -137,6 +138,29 @@ def search(db: Session, query: str, threshold: int = 60) -> List[type[Model]]:
 		# Return just the recipes
 		return [r['recipe'] for r in results]
 
+	except SQLAlchemyError as e:
+		error = str(e.__dict__['orig'])
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+
+def search_by_category(db: Session, category_id: int) -> List[type[Model]]:
+	"""
+	Search recipes by category ID.
+	Returns all recipes that have the specified category in their category_id_list.
+	"""
+	try:
+		all_recipes = db.query(Model).all()
+		category_str = str(category_id)
+
+		# Filter recipes that have this category ID in their comma-separated list
+		filtered_recipes = []
+		for recipe in all_recipes:
+			if recipe.category_id_list:
+				category_ids = [cid.strip() for cid in recipe.category_id_list.split(',')]
+				if category_str in category_ids:
+					filtered_recipes.append(recipe)
+
+		return filtered_recipes
 	except SQLAlchemyError as e:
 		error = str(e.__dict__['orig'])
 		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)

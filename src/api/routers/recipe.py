@@ -29,6 +29,11 @@ def search(query: str, threshold: int = 60, db: Session = Depends(get_db)):
 	return controller.search(db, query, threshold)
 
 
+@router.get("/category/{category_id}", response_model=list[RecipeRead])
+def search_by_category(category_id: int, db: Session = Depends(get_db)):
+	return controller.search_by_category(db, category_id)
+
+
 @router.get("/{recipe_id}", response_model=RecipeRead)
 def read_one(recipe_id: int, db: Session = Depends(get_db)):
 	return controller.read_one(db, recipe_id)

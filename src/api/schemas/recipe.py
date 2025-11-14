@@ -8,6 +8,7 @@ class RecipeBase(BaseModel):
 	description: str
 	instructions: str
 	ingredient_id_list: str
+	category_id_list: Optional[str] = None
 	servings: int
 	video_embed_url: Optional[str] = None
 	image_url: Optional[str] = None
@@ -21,6 +22,7 @@ class RecipeUpdate(BaseModel):
 	title: Optional[str] = None
 	description: Optional[str] = None
 	instructions: Optional[str] = None
+	category_id_list: Optional[str] = None
 	ingredient_id_list: Optional[str] = None
 	servings: Optional[int] = None
 	video_embed_url: Optional[str] = None

@@ -12,6 +12,7 @@ class Recipe(Base):
 	description = Column(String, nullable=True)
 	instructions = Column(String, nullable=False)
 	ingredient_id_list = Column(String, nullable=False)  # Comma-separated list of ingredient IDs
+	category_id_list = Column(String, nullable=True)  # Comma-separated list of category IDs
 	servings = Column(Integer, nullable=False)
 	video_embed_url = Column(String, nullable=True)
 	image_url = Column(String, nullable=True)

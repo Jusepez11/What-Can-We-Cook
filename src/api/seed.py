@@ -3,6 +3,7 @@ from src.api.models import User, Role
 from src.api.models.ingredient import Ingredient
 from src.api.models.pantry_ingredient import PantryIngredient
 from src.api.models.recipe import Recipe
+from src.api.models.category import Category
 from src.api.util.auth import hash_password
 
 
@@ -26,6 +27,20 @@ def seed_if_needed():
 		db.add_all(ingredients)
 		db.commit()
 
+	if db.query(Category).count() == 0:
+		categories = [
+			Category(id=1, name="Breakfast", description="Morning meals, oats, eggs, smoothies"),
+			Category(id=2, name="Lunch", description="Midday meals, salads, sandwiches, bowls"),
+			Category(id=3, name="Dinner", description="Evening meals, pastas, stir-fries, roasts"),
+			Category(id=4, name="Snacks", description="Light bites, bars, dips, small portions"),
+			Category(id=5, name="Vegetarian", description="Vegetable-forward recipes"),
+			Category(id=6, name="Gluten Free", description="Recipes without gluten"),
+			Category(id=7, name="Dairy Free", description="Recipes without dairy products"),
+		]
+
+		db.add_all(categories)
+		db.commit()
+
 	if db.query(Recipe).count() == 0:
 		kapsalon = Recipe(
 			id=1,
@@ -41,6 +56,7 @@ def seed_if_needed():
 				"7. Spoon the salad over the baked dish, drizzle with garlic sauce and hot sauce, then serve immediately."
 			),
 			ingredient_id_list="2,8,9,10,3",
+			category_id_list="3",
 			servings=1,
 			video_embed_url="https://www.youtube.com/embed/UIcuiU1kV8I",
 			image_url="https://www.themealdb.com/images/media/meals/sxysrt1468240488.jpg"
@@ -59,6 +75,7 @@ def seed_if_needed():
 				"6. Let rest for 10 minutes, then remove from tin and serve warm."
 			),
 			ingredient_id_list="6,7,8",
+			category_id_list="3,5",
 			servings=4,
 			video_embed_url="https://www.youtube.com/embed/vT0q5c880Rg",
 			image_url="https://www.themealdb.com/images/media/meals/wssvvs1511785879.jpg"
@@ -76,6 +93,7 @@ def seed_if_needed():
 				"5. Slice in half and serve while warm."
 			),
 			ingredient_id_list="1,3,4,10",
+			category_id_list="2",
 			servings=1,
 			video_embed_url="",
 			image_url="https://essenrezept.de/wp-content/uploads/2020/12/Caprese-Bacon-Ciabatta-Sandwich.jpg",
@@ -92,6 +110,7 @@ def seed_if_needed():
 				"4. Toss the warm lentils with vinaigrette, add chopped herbs if available, and serve warm or at room temperature."
 			),
 			ingredient_id_list="5,7",
+			category_id_list="2,5,6",
 			servings=2,
 			video_embed_url="",
 			image_url="https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
@@ -109,6 +128,7 @@ def seed_if_needed():
 				"5. Rest the chops for 5 minutes before serving."
 			),
 			ingredient_id_list="2",
+			category_id_list="3,6",
 			servings=2,
 			video_embed_url="",
 			image_url="https://www.themealdb.com/images/media/meals/1bsv1q1560459826.jpg",
@@ -126,9 +146,10 @@ def seed_if_needed():
 				"5. Let rest for 5 minutes, then serve as a side dish."
 			),
 			ingredient_id_list="9,8,7",
+			category_id_list="3,5,6",
 			servings=4,
 			video_embed_url="",
-			image_url="https://www.themealdb.com/images/media/meals/rwuyqx1511383174.jpg",
+			image_url="https://therecipeshome.com/wp-content/uploads/2025/07/0_3-1752240157235.webp",
 		)
 
 		garden_salad = Recipe(
@@ -142,6 +163,7 @@ def seed_if_needed():
 				"4. Optionally top with croutons or a sprinkle of cheese."
 			),
 			ingredient_id_list="10",
+			category_id_list="4,5,6,7",
 			servings=2,
 			video_embed_url="",
 			image_url="https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
@@ -188,3 +210,4 @@ def seed_if_needed():
 		db.commit()
 
 	db.close()
+
