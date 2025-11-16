@@ -22,6 +22,9 @@ def seed_if_needed():
 			Ingredient(id=8, name="Cheese"),
 			Ingredient(id=9, name="Potatoes"),
 			Ingredient(id=10, name="Lettuce"),
+			Ingredient(id=11, name="Green Plantain"),
+			Ingredient(id=12, name="Yellow Plantain"),
+			Ingredient(id=13, name="Chicharron"),
 		]
 
 		db.add_all(ingredients)
@@ -77,7 +80,7 @@ def seed_if_needed():
 			ingredient_id_list="6,7,8",
 			category_id_list="3,5",
 			servings=4,
-			video_embed_url="https://www.youtube.com/embed/vT0q5c880Rg",
+			video_embed_url="https://www.youtube.com/embed/x4AlJXOwfPk?si=o98UxmzsI_R3LhQH",
 			image_url="https://www.themealdb.com/images/media/meals/wssvvs1511785879.jpg"
 		)
 
@@ -169,6 +172,18 @@ def seed_if_needed():
 			image_url="https://www.themealdb.com/images/media/meals/wvpsxx1468256321.jpg",
 		)
 
+		bolon = Recipe(
+            id = 8,
+            title = "Bolon",
+            description = "Famous Ecuadorian dish usually served at brunch and with a beef stew",
+            instructions = "Cut the plantain into slices, fried the slices, mash them up a little bit, add chicharron and make a ball like shape",
+            ingredient_id_list = "11,13",
+            category_id_list = "1,7",
+            servings = 1,
+            video_embed_url = "https://www.youtube.com/embed/UaCEH8cRzpI",
+            image_url = "https://img.goraymi.com/2017/12/15/c33a10f623d5e94cdef6f63776408547_xl.jpg",
+        )
+
 		db.add_all([
 			kapsalon,
 			flamiche,
@@ -177,6 +192,7 @@ def seed_if_needed():
 			roast_lamb,
 			cheesy_potatoes,
 			garden_salad,
+            bolon
 		])
 		db.commit()
 
