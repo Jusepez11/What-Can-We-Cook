@@ -11,7 +11,7 @@ class RecipeBase(BaseModel):
 	category_id_list: Optional[str] = None
 	servings: int
 	video_embed_url: Optional[str] = None
-	image_url: Optional[str] = None
+	image_url: str
 
 
 class RecipeCreate(RecipeBase):

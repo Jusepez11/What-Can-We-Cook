@@ -913,6 +913,49 @@ ol li {
     }
 }
 
+.selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+    min-height: 0;
+}
+
+.selected-items:empty {
+    display: none;
+}
+
+.selected-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    font-size: 14px;
+    color: #e4e8f1;
+}
+
+.selected-item .remove-item {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected-item .remove-item:hover {
+    color: #ff5252;
+}
+
 .toast.success {
     border-left: 4px solid #10b981;
 }

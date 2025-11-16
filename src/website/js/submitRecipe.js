@@ -1,192 +1,418 @@
-/**
- * Get references to the Submit Recipe page elements.
- */
-function getSubmitRecipeElements() {
-    const inputs = document.querySelectorAll(
-        "main .card .grid input[type='text']"
-    );
-
-    const submitButton = document.querySelector("main .card .btn.primary");
-    const helperText = document.querySelector("main .card .row .small");
-
-    if (inputs.length < 3) {
-        console.warn("Expected 3 text inputs on SubmitRecipe page.");
-    }
-
-    return {
-        titleInput: inputs[0] || null,
-        categoryInput: inputs[1] || null,
-        descriptionInput: inputs[2] || null,
-        submitButton,
-        helperText
-    };
-}
+const state = {
+    selectedCategories: new Map(), // categoryId -> categoryName
+    selectedIngredients: new Map() // ingredientId -> ingredientName
+};
 
 /**
- * Show a status message in the helper text under the button.
- * Falls back to console logging if the element is missing.
- *
- * @param {string} message
- * @param {"info"|"success"|"error"} [type="info"]
+ * Add a category to the selected list
+ * @param {number} id - Category ID
+ * @param {string} name - Category name
  */
-function showSubmitStatus(message, type = "info") {
-    const {helperText} = getSubmitRecipeElements();
-
-    if (!helperText) {
-        console.log(type.toUpperCase() + ":", message);
+function addSelectedCategory(id, name) {
+    if (state.selectedCategories.has(id)) {
+        showToast('Category already added', 'error');
         return;
     }
 
-    helperText.textContent = message;
-
-    // Optional styling hook
-    helperText.className = "small"; // reset base class
-    if (type === "success") {
-        helperText.classList.add("status-success");
-    } else if (type === "error") {
-        helperText.classList.add("status-error");
-    }
+    state.selectedCategories.set(id, name);
+    updateSelectedCategoriesDisplay();
 }
 
 /**
- * Collect recipe data from the three text fields.
- *
- * @returns {{ title: string, category: string, description: string }}
+ * Remove a category from the selected list
+ * @param {number} id - Category ID
  */
-function collectSubmitRecipeData() {
-    return {
-        title: document.getElementById("recipe-title")?.value.trim() || "",
-        category: document.getElementById("recipe-category")?.value.trim() || "",
-        description: document.getElementById("recipe-description")?.value.trim() || "",
-        servings: parseInt(
-            document.getElementById("recipe-servings")?.value || "1",
-            10
-        ),
-        ingredientIds: document.getElementById("recipe-ingredients")?.value.trim() || "",
-        instructions: document.getElementById("recipe-instructions")?.value.trim() || "",
-        imageUrl: document.getElementById("recipe-image-url")?.value.trim() || "",
-        videoUrl: document.getElementById("recipe-video-url")?.value.trim() || ""
-    };
+function removeSelectedCategory(id) {
+    state.selectedCategories.delete(id);
+    updateSelectedCategoriesDisplay();
 }
 
 /**
- * Build the payload object for POST /recipes/.
- *
- * @param {{ title: string, category: string, description: string }} data
- * @returns {object}
+ * Update the visual display of selected categories
  */
-function buildRecipeCreatePayload(data) {
-    return {
-        title: data.title,
-        description: data.description,
-        instructions: data.instructions,
-        ingredient_id_list: data.ingredientIds,
-        servings: data.servings,
-        image_url: data.imageUrl || null,
-        video_embed_url: data.videoUrl || null
-    };
+function updateSelectedCategoriesDisplay() {
+    const container = document.getElementById('selected-categories');
+    container.innerHTML = '';
+
+    state.selectedCategories.forEach((name, id) => {
+        const tag = document.createElement('div');
+        tag.className = 'selected-item';
+        tag.innerHTML = `
+            <span>${name}</span>
+            <button class="remove-item" data-id="${id}">×</button>
+        `;
+
+        tag.querySelector('.remove-item').addEventListener('click', () => {
+            removeSelectedCategory(id);
+        });
+
+        container.appendChild(tag);
+    });
 }
 
 /**
- * Handle submit event.
- *
- * @param {MouseEvent} event
+ * Add an ingredient to the selected list
+ * @param {number} id - Ingredient ID
+ * @param {string} name - Ingredient name
  */
-async function handleSubmitRecipeClick(event) {
-    event.preventDefault();
-
-    const data = collectSubmitRecipeData();
-
-    // Minimal front-end validation
-    if (!data.title) {
-        showSubmitStatus("Please enter a recipe title.", "error");
+function addSelectedIngredient(id, name) {
+    if (state.selectedIngredients.has(id)) {
+        showToast('Ingredient already added', 'error');
         return;
     }
 
-    const payload = buildRecipeCreatePayload(data);
+    state.selectedIngredients.set(id, name);
+    updateSelectedIngredientsDisplay();
+}
 
-    // Use the same auth flow as pantry.js
-    // Assumes API_BASE_URL & getAuthHeaders() are defined in auth.js
-    showSubmitStatus("Submitting recipe...", "info");
+/**
+ * Remove an ingredient from the selected list
+ * @param {number} id - Ingredient ID
+ */
+function removeSelectedIngredient(id) {
+    state.selectedIngredients.delete(id);
+    updateSelectedIngredientsDisplay();
+}
+
+/**
+ * Update the visual display of selected ingredients
+ */
+function updateSelectedIngredientsDisplay() {
+    const container = document.getElementById('selected-ingredients');
+    container.innerHTML = '';
+
+    state.selectedIngredients.forEach((name, id) => {
+        const tag = document.createElement('div');
+        tag.className = 'selected-item';
+        tag.innerHTML = `
+            <span>${name}</span>
+            <button class="remove-item" data-id="${id}">×</button>
+        `;
+
+        tag.querySelector('.remove-item').addEventListener('click', () => {
+            removeSelectedIngredient(id);
+        });
+
+        container.appendChild(tag);
+    });
+}
+
+/**
+ * Handle category input with autocomplete
+ */
+function initializeCategoryInput() {
+    const input = document.getElementById('category-input');
+    if (!input) return;
+
+    let searchTimeout;
+
+    input.addEventListener('input', (e) => {
+        const query = e.target.value;
+
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(async () => {
+            if (query.length >= 2) {
+                const categories = await searchCategories(query);
+                showSuggestions(categories, input, async (category) => {
+                    addSelectedCategory(category.id, category.name);
+                    input.value = '';
+                });
+            }
+        }, 300);
+    });
+
+    input.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const categoryName = input.value.trim();
+
+            if (!categoryName) return;
+
+            // Search for exact match
+            const searchResults = await searchCategories(categoryName);
+            const exactMatch = searchResults.find(
+                cat => cat.name.toLowerCase() === categoryName.toLowerCase()
+            );
+
+            if (exactMatch) {
+                addSelectedCategory(exactMatch.id, exactMatch.name);
+                input.value = '';
+            } else if (searchResults.length > 0) {
+                // Ask user if they want to use suggested category or create new
+                await new Promise((resolve) => {
+                    showModal({
+                        title: 'Category Not Found',
+                        message: `"${categoryName}" not found. Did you mean "${searchResults[0].name}"?`,
+                        type: 'confirm',
+                        confirmText: `Use "${searchResults[0].name}"`,
+                        cancelText: 'Create New',
+                        onConfirm: () => {
+                            addSelectedCategory(searchResults[0].id, searchResults[0].name);
+                            input.value = '';
+                            resolve();
+                        },
+                        onCancel: async () => {
+                            try {
+                                const newCategory = await createCategory(categoryName);
+                                addSelectedCategory(newCategory.id, newCategory.name);
+                                showToast(`Created new category: ${categoryName}`, 'success');
+                                input.value = '';
+                                resolve();
+                            } catch (error) {
+                                showToast('Failed to create category', 'error');
+                                resolve();
+                            }
+                        }
+                    });
+                });
+            } else {
+                // Create new category
+                try {
+                    const newCategory = await createCategory(categoryName);
+                    addSelectedCategory(newCategory.id, newCategory.name);
+                    showToast(`Created new category: ${categoryName}`, 'success');
+                    input.value = '';
+                } catch (error) {
+                    showToast('Failed to create category', 'error');
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Handle ingredient input with autocomplete
+ */
+function initializeIngredientInput() {
+    const input = document.getElementById('ingredient-input');
+    if (!input) return;
+
+    let searchTimeout;
+
+    input.addEventListener('input', (e) => {
+        const query = e.target.value;
+
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(async () => {
+            if (query.length >= 2) {
+                const ingredients = await searchIngredients(query);
+                showSuggestions(ingredients, input, async (ingredient) => {
+                    addSelectedIngredient(ingredient.id, ingredient.name);
+                    input.value = '';
+                });
+            }
+        }, 300);
+    });
+
+    input.addEventListener('keypress', async (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const ingredientName = input.value.trim();
+
+            if (!ingredientName) return;
+
+            // Search for exact match
+            const searchResults = await searchIngredients(ingredientName);
+            const exactMatch = searchResults.find(
+                ing => ing.name.toLowerCase() === ingredientName.toLowerCase()
+            );
+
+            if (exactMatch) {
+                addSelectedIngredient(exactMatch.id, exactMatch.name);
+                input.value = '';
+            } else if (searchResults.length > 0) {
+                // Ask user if they want to use suggested ingredient or create new
+                await new Promise((resolve) => {
+                    showModal({
+                        title: 'Ingredient Not Found',
+                        message: `"${ingredientName}" not found. Did you mean "${searchResults[0].name}"?`,
+                        type: 'confirm',
+                        confirmText: `Use "${searchResults[0].name}"`,
+                        cancelText: 'Create New',
+                        onConfirm: () => {
+                            addSelectedIngredient(searchResults[0].id, searchResults[0].name);
+                            input.value = '';
+                            resolve();
+                        },
+                        onCancel: async () => {
+                            try {
+                                const newIngredient = await createIngredient(ingredientName);
+                                addSelectedIngredient(newIngredient.id, newIngredient.name);
+                                showToast(`Created new ingredient: ${ingredientName}`, 'success');
+                                input.value = '';
+                                resolve();
+                            } catch (error) {
+                                showToast('Failed to create ingredient', 'error');
+                                resolve();
+                            }
+                        }
+                    });
+                });
+            } else {
+                // Create new ingredient
+                try {
+                    const newIngredient = await createIngredient(ingredientName);
+                    addSelectedIngredient(newIngredient.id, newIngredient.name);
+                    showToast(`Created new ingredient: ${ingredientName}`, 'success');
+                    input.value = '';
+                } catch (error) {
+                    showToast('Failed to create ingredient', 'error');
+                }
+            }
+        }
+    });
+}
+
+/**
+ * Handle recipe submission
+ */
+async function handleSubmitRecipe() {
+    const title = document.getElementById('recipe-title').value.trim();
+    const description = document.getElementById('recipe-description').value.trim();
+    const instructions = document.getElementById('recipe-instructions').value.trim();
+    const servings = parseInt(document.getElementById('recipe-servings').value, 10);
+    const imageUrl = document.getElementById('recipe-image-url').value.trim();
+    const videoUrl = document.getElementById('recipe-video-url').value.trim();
+
+    // Validation
+    if (!title) {
+        showToast('Please enter a recipe title', 'error');
+        return;
+    }
+
+    if (!description) {
+        showToast('Please enter a description', 'error');
+        return;
+    }
+
+    if (!instructions) {
+        showToast('Please enter instructions', 'error');
+        return;
+    }
+
+    if (!imageUrl) {
+        showToast('Please provide an image URL', 'error');
+        return;
+    }
+
+    if (state.selectedIngredients.size === 0) {
+        showToast('Please add at least one ingredient', 'error');
+        return;
+    }
+
+    // Check for duplicate recipe title
+    try {
+        const existingRecipes = await searchRecipes(title, 90); // High threshold for close matches
+        const exactMatch = existingRecipes.find(
+            recipe => recipe.title.toLowerCase() === title.toLowerCase()
+        );
+
+        if (exactMatch) {
+            showToast('A recipe with this title already exists. Please choose a different title.', 'error');
+            return;
+        }
+
+        // If similar recipes found (but not exact match), warn the user
+        if (existingRecipes.length > 0) {
+            const shouldContinue = await new Promise((resolve) => {
+                showModal({
+                    title: 'Similar Recipe Found',
+                    message: `A similar recipe "${existingRecipes[0].title}" already exists. Are you sure you want to create this recipe?`,
+                    type: 'confirm',
+                    confirmText: 'Create Anyway',
+                    cancelText: 'Cancel',
+                    onConfirm: () => {
+                        resolve(true);
+                    },
+                    onCancel: () => {
+                        resolve(false);
+                    }
+                });
+            });
+
+            if (!shouldContinue) {
+                return;
+            }
+        }
+    } catch (error) {
+        console.error('Error checking for duplicate recipes:', error);
+        // Continue with submission even if check fails
+    }
+
+    // Build category_id_list and ingredient_id_list
+    const categoryIdList = Array.from(state.selectedCategories.keys()).join(',');
+    const ingredientIdList = Array.from(state.selectedIngredients.keys()).join(',');
+
+    const payload = {
+        title,
+        description,
+        instructions,
+        servings,
+        ingredient_id_list: ingredientIdList,
+        category_id_list: categoryIdList || null,
+        image_url: imageUrl,
+        video_embed_url: videoUrl || null
+    };
 
     try {
         const response = await fetch(`${API_BASE_URL}/recipes/`, {
-            method: "POST",
+            method: 'POST',
             headers: getAuthHeaders(),
             body: JSON.stringify(payload)
         });
 
         if (!response.ok) {
-            let errorMessage = "Failed to submit recipe.";
+            let errorMessage = 'Failed to submit recipe.';
             try {
                 const err = await response.json();
                 if (err?.detail) {
                     errorMessage = Array.isArray(err.detail)
-                        ? err.detail.map((d) => d.msg || d).join(", ")
+                        ? err.detail.map((d) => d.msg || d).join(', ')
                         : err.detail;
                 }
             } catch (_) {
-                // ignore parse errors, keep default message
+                // Ignore parse errors
             }
 
-            showSubmitStatus(errorMessage, "error");
+            showToast(errorMessage, 'error');
             return;
         }
 
         const savedRecipe = await response.json();
+        showToast('Recipe submitted successfully!', 'success');
 
-        showSubmitStatus(
-            `Recipe submitted! New recipe ID: ${savedRecipe.id}`,
-            "success"
-        );
+        // Redirect to recipe detail page
+        setTimeout(() => {
+            window.location.href = `RecipeDetail.html?id=${savedRecipe.id}`;
+        }, 1000);
 
-        // Clear inputs
-        const {titleInput, categoryInput, descriptionInput} =
-            getSubmitRecipeElements();
-        document.getElementById("recipe-title").value = "";
-        document.getElementById("recipe-category").value = "";
-        document.getElementById("recipe-description").value = "";
-        document.getElementById("recipe-servings").value = "1";
-        document.getElementById("recipe-ingredients").value = "";
-        document.getElementById("recipe-instructions").value = "";
-        document.getElementById("recipe-image-url").value = "";
-        document.getElementById("recipe-video-url").value = "";
-
-        // Optional: redirect to detail page
-        // window.location.href = `RecipeDetail.html?id=${savedRecipe.id}`;
     } catch (error) {
-        console.error("Error while submitting recipe:", error);
-        showSubmitStatus(
-            "Could not reach the server. Please make sure the API is running.",
-            "error"
-        );
+        console.error('Error submitting recipe:', error);
+        showToast('Could not reach the server. Please try again.', 'error');
     }
 }
 
 /**
- * Initialize SubmitRecipe page:
- *  - Ensure user is authenticated
- *  - Hook up click handler for the submit button
+ * Initialize the submit recipe page
  */
 function initSubmitRecipePage() {
-    // Use same auth guard as pantry page, if available
-    if (typeof requireAuth === "function") {
+    // Check authentication
+    if (typeof requireAuth === 'function') {
         if (!requireAuth()) {
             return;
         }
     }
 
-    const {submitButton} = getSubmitRecipeElements();
+    // Initialize autocomplete inputs
+    initializeCategoryInput();
+    initializeIngredientInput();
 
-    if (!submitButton) {
-        console.warn('Submit button not found on SubmitRecipe page.');
-        return;
+    // Handle submit button
+    const submitButton = document.getElementById('submit-recipe-btn');
+    if (submitButton) {
+        submitButton.addEventListener('click', handleSubmitRecipe);
     }
-
-    submitButton.addEventListener("click", handleSubmitRecipeClick);
-
-    // Replace the demo text with a real hint
-    showSubmitStatus("Fill in the fields and click Submit.", "info");
 }
 
-document.addEventListener("DOMContentLoaded", initSubmitRecipePage);
+document.addEventListener('DOMContentLoaded', initSubmitRecipePage);
+

@@ -4,12 +4,12 @@ from sqlalchemy.orm import Session
 from src.api.controllers import category as controller
 from src.api.dependencies.database import get_db
 from src.api.schemas.category import CategoryCreate, CategoryUpdate, CategoryRead
-from src.api.util.auth import get_current_active_admin_user
+from src.api.util.auth import get_current_active_admin_user, get_current_active_user
 
 router = APIRouter(prefix="/categories", tags=["Categories"])
 
 
-@router.post("/", response_model=CategoryRead, dependencies=[Depends(get_current_active_admin_user)])
+@router.post("/", response_model=CategoryRead, dependencies=[Depends(get_current_active_user)])
 def create(request: CategoryCreate, db: Session = Depends(get_db)):
 	return controller.create(db, request)
 

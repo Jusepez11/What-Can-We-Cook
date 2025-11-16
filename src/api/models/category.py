@@ -9,7 +9,7 @@ class Category(Base):
 
 	id = Column(Integer, primary_key=True, index=True)
 	name = Column(String, unique=True, index=True, nullable=False)
-	description = Column(String, nullable=True)
+	description = Column(String, nullable=True, default="Community-added category")
 
 	def __repr__(self) -> str:
 		"""Readable representation useful in logs/debugging"""

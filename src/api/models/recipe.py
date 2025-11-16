@@ -15,7 +15,7 @@ class Recipe(Base):
 	category_id_list = Column(String, nullable=True)  # Comma-separated list of category IDs
 	servings = Column(Integer, nullable=False)
 	video_embed_url = Column(String, nullable=True)
-	image_url = Column(String, nullable=True)
+	image_url = Column(String, nullable=False)
 	created_at = Column(DateTime, default=func.now())
 	updated_at = Column(DateTime, default=func.now(), onupdate=func.now())
 
