@@ -1,3 +1,5 @@
+// js/submitRecipe.js
+
 /**
  * Get references to the Submit Recipe page elements.
  * Relies on the current structure of SubmitRecipe.html:
@@ -37,7 +39,7 @@ function getSubmitRecipeElements() {
  * @param {"info"|"success"|"error"} [type="info"]
  */
 function showSubmitStatus(message, type = "info") {
-    const {helperText} = getSubmitRecipeElements();
+    const { helperText } = getSubmitRecipeElements();
 
     if (!helperText) {
         console.log(type.toUpperCase() + ":", message);
@@ -61,13 +63,18 @@ function showSubmitStatus(message, type = "info") {
  * @returns {{ title: string, category: string, description: string }}
  */
 function collectSubmitRecipeData() {
-    const {titleInput, categoryInput, descriptionInput} =
-        getSubmitRecipeElements();
-
     return {
-        title: (titleInput?.value || "").trim(),
-        category: (categoryInput?.value || "").trim(),
-        description: (descriptionInput?.value || "").trim()
+        title: document.getElementById("recipe-title")?.value.trim() || "",
+        category: document.getElementById("recipe-category")?.value.trim() || "",
+        description: document.getElementById("recipe-description")?.value.trim() || "",
+        servings: parseInt(
+            document.getElementById("recipe-servings")?.value || "1",
+            10
+        ),
+        ingredientIds: document.getElementById("recipe-ingredients")?.value.trim() || "",
+        instructions: document.getElementById("recipe-instructions")?.value.trim() || "",
+        imageUrl: document.getElementById("recipe-image-url")?.value.trim() || "",
+        videoUrl: document.getElementById("recipe-video-url")?.value.trim() || ""
     };
 }
 
@@ -78,20 +85,16 @@ function collectSubmitRecipeData() {
  * @param {{ title: string, category: string, description: string }} data
  * @returns {object}
  */
+
 function buildRecipeCreatePayload(data) {
     return {
         title: data.title,
         description: data.description,
-
-        // Placeholder values for now; extend when the UI has more fields
-        instructions: "",
-        ingredient_id_list: "",
-        servings: 1,
-        video_embed_url: null,
-        image_url: null
-
-        // When/if backend supports category:
-        // category: data.category,
+        instructions: data.instructions,
+        ingredient_id_list: data.ingredientIds,
+        servings: data.servings,
+        image_url: data.imageUrl || null,
+        video_embed_url: data.videoUrl || null
     };
 }
 
@@ -149,11 +152,16 @@ async function handleSubmitRecipeClick(event) {
         );
 
         // Clear inputs
-        const {titleInput, categoryInput, descriptionInput} =
+        const { titleInput, categoryInput, descriptionInput } =
             getSubmitRecipeElements();
-        if (titleInput) titleInput.value = "";
-        if (categoryInput) categoryInput.value = "";
-        if (descriptionInput) descriptionInput.value = "";
+        document.getElementById("recipe-title").value = "";
+        document.getElementById("recipe-category").value = "";
+        document.getElementById("recipe-description").value = "";
+        document.getElementById("recipe-servings").value = "1";
+        document.getElementById("recipe-ingredients").value = "";
+        document.getElementById("recipe-instructions").value = "";
+        document.getElementById("recipe-image-url").value = "";
+        document.getElementById("recipe-video-url").value = "";
 
         // Optional: redirect to detail page
         // window.location.href = `RecipeDetail.html?id=${savedRecipe.id}`;
@@ -171,15 +179,15 @@ async function handleSubmitRecipeClick(event) {
  *  - Ensure user is authenticated
  *  - Hook up click handler for the submit button
  */
-async function initSubmitRecipePage() {
+function initSubmitRecipePage() {
     // Use same auth guard as pantry page, if available
     if (typeof requireAuth === "function") {
-        if (!await requireAuth()) {
+        if (!requireAuth()) {
             return;
         }
     }
 
-    const {submitButton} = getSubmitRecipeElements();
+    const { submitButton } = getSubmitRecipeElements();
 
     if (!submitButton) {
         console.warn('Submit button not found on SubmitRecipe page.');
