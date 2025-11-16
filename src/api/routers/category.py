@@ -32,4 +32,3 @@ def update(category_id: int, request: CategoryUpdate, db: Session = Depends(get_
 @router.delete("/{category_id}", dependencies=[Depends(get_current_active_admin_user)])
 def delete(category_id: int, db: Session = Depends(get_db)):
 	return controller.delete(db, category_id)
-

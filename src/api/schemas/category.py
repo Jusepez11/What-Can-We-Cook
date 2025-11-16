@@ -23,4 +23,3 @@ class CategoryRead(CategoryBase):
 	model_config = {
 		"from_attributes": True
 	}
-

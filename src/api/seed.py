@@ -1,9 +1,9 @@
 from src.api.dependencies.database import SessionLocal
 from src.api.models import User, Role
+from src.api.models.category import Category
 from src.api.models.ingredient import Ingredient
 from src.api.models.pantry_ingredient import PantryIngredient
 from src.api.models.recipe import Recipe
-from src.api.models.category import Category
 from src.api.util.auth import hash_password
 
 
@@ -173,16 +173,16 @@ def seed_if_needed():
 		)
 
 		bolon = Recipe(
-            id = 8,
-            title = "Bolon",
-            description = "Famous Ecuadorian dish usually served at brunch and with a beef stew",
-            instructions = "Cut the plantain into slices, fried the slices, mash them up a little bit, add chicharron and make a ball like shape",
-            ingredient_id_list = "11,13",
-            category_id_list = "1,7",
-            servings = 1,
-            video_embed_url = "https://www.youtube.com/embed/UaCEH8cRzpI",
-            image_url = "https://img.goraymi.com/2017/12/15/c33a10f623d5e94cdef6f63776408547_xl.jpg",
-        )
+			id=8,
+			title="Bolon",
+			description="Famous Ecuadorian dish usually served at brunch and with a beef stew",
+			instructions="Cut the plantain into slices, fried the slices, mash them up a little bit, add chicharron and make a ball like shape",
+			ingredient_id_list="11,13",
+			category_id_list="1,7",
+			servings=1,
+			video_embed_url="https://www.youtube.com/embed/UaCEH8cRzpI",
+			image_url="https://img.goraymi.com/2017/12/15/c33a10f623d5e94cdef6f63776408547_xl.jpg",
+		)
 
 		db.add_all([
 			kapsalon,
@@ -192,7 +192,7 @@ def seed_if_needed():
 			roast_lamb,
 			cheesy_potatoes,
 			garden_salad,
-            bolon
+			bolon
 		])
 		db.commit()
 
@@ -226,4 +226,3 @@ def seed_if_needed():
 		db.commit()
 
 	db.close()
-

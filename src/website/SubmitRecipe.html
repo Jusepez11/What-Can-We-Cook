@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>SubmitRecipe • What Can We Cook</title>
+    <title>Submit Recipe • What Can We Cook</title>
     <link rel="icon" type="image/png" href="image/favicon.png"/>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="css/stylesheet.css"/>
@@ -21,9 +21,7 @@
             <a href="index.html">Home</a>
             <a href="Recipes.html">Recipes</a>
             <a href="Browse.html">Browse</a>
-            <a href="Favorites.html">Favorites</a>
             <a href="MyPantry.html">My Pantry</a>
-            <a href="Community.html">Community</a>
             <a href="Login.html">Login</a>
             <a href="Signup.html">Sign Up</a>
             <a href="SubmitRecipe.html" class="btn">Submit</a>
@@ -35,77 +33,76 @@
 
     <section class="hero">
         <h1>Submit a Recipe</h1>
-        <p class="muted">This is a non-functional form for the demo - need to add functions.</p>
     </section>
-   <section class="card">
-    <div class="grid" style="grid-template-columns:1fr 1fr">
-        <div>
-            <label class="small">Recipe title</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px">
-                <input id="recipe-title" type="text" placeholder="Your great dish">
+    <section class="card">
+        <div class="grid" style="grid-template-columns:1fr 1fr">
+            <div>
+                <label class="small">Recipe title</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px">
+                    <input id="recipe-title" type="text" placeholder="Your great dish">
+                </div>
             </div>
-        </div>
 
-        <div>
-            <label class="small">Category</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px">
-                <input id="recipe-category" type="text" placeholder="e.g., Dinner">
+            <div>
+                <label class="small">Category</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px">
+                    <input id="recipe-category" type="text" placeholder="e.g., Dinner">
+                </div>
             </div>
-        </div>
 
-        <div style="grid-column:1 / -1; margin-top:10px">
-            <label class="small">Short description</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px">
+            <div style="grid-column:1 / -1; margin-top:10px">
+                <label class="small">Short description</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px">
                  <textarea id="recipe-description" rows="5" style="width:100%; border:0; outline:none; resize:vertical;"
-                          placeholder="One or two sentences"></textarea>
+                           placeholder="One or two sentences"></textarea>
+                </div>
             </div>
-        </div>
 
-        <!-- Servings + Ingredients -->
-        <div style="margin-top:10px">
-            <label class="small">Servings</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px">
-                <input id="recipe-servings" type="number" min="1" value="1" placeholder="e.g., 4">
+            <!-- Servings + Ingredients -->
+            <div style="margin-top:10px">
+                <label class="small">Servings</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px">
+                    <input id="recipe-servings" type="number" min="1" value="1" placeholder="e.g., 4">
+                </div>
             </div>
-        </div>
 
-        <div style="margin-top:10px">
-            <label class="small">Ingredient IDs</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px">
-                <input id="recipe-ingredients" type="text" placeholder="e.g., 1,2,3">
+            <div style="margin-top:10px">
+                <label class="small">Ingredient IDs</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px">
+                    <input id="recipe-ingredients" type="text" placeholder="e.g., 1,2,3">
+                </div>
             </div>
-        </div>
 
-        <!-- Instructions full width -->
-        <div style="grid-column:1 / -1; margin-top:10px">
-            <label class="small">Instructions</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px; width:100%">
+            <!-- Instructions full width -->
+            <div style="grid-column:1 / -1; margin-top:10px">
+                <label class="small">Instructions</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px; width:100%">
                 <textarea id="recipe-instructions" rows="5" style="width:100%; border:0; outline:none; resize:vertical;"
                           placeholder="Step-by-step instructions"></textarea>
+                </div>
+            </div>
+
+            <!-- Image + Video URLs -->
+            <div style="margin-top:10px">
+                <label class="small">Image URL</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px">
+                    <input id="recipe-image-url" type="url" placeholder="https://example.com/image.jpg">
+                </div>
+            </div>
+
+            <div style="margin-top:10px">
+                <label class="small">Video embed URL</label>
+                <div class="search" style="justify-content:flex-start;margin-top:6px">
+                    <input id="recipe-video-url" type="url" placeholder="https://www.youtube.com/embed/...">
+                </div>
             </div>
         </div>
 
-        <!-- Image + Video URLs -->
-        <div style="margin-top:10px">
-            <label class="small">Image URL</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px">
-                <input id="recipe-image-url" type="url" placeholder="https://example.com/image.jpg">
-            </div>
+        <div style="margin-top:12px" class="row">
+            <a class="btn primary" href="#">Submit</a>
+            <span class="small">Fill in your recipe and click Submit.</span>
         </div>
-
-        <div style="margin-top:10px">
-            <label class="small">Video embed URL</label>
-            <div class="search" style="justify-content:flex-start;margin-top:6px">
-                <input id="recipe-video-url" type="url" placeholder="https://www.youtube.com/embed/...">
-            </div>
-        </div>
-    </div>
-
-    <div style="margin-top:12px" class="row">
-        <a class="btn primary" href="#">Submit</a>
-        <span class="small">Fill in your recipe and click Submit.</span>
-    </div>
-</section>
+    </section>
 
 
 </main>
@@ -114,7 +111,6 @@
     <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
         <p class="small">© 2025 What Can We Cook</p>
         <div class="row">
-            <a class="btn" href="Community.html">Community</a>
             <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
         </div>
     </div>

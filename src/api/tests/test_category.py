@@ -133,4 +133,3 @@ def test_create_duplicate_category(client, test_seed_data, authenticate_demo_adm
 
 	response = client.post("/categories/", json=duplicate_category, headers=authenticate_demo_admin_user)
 	assert response.status_code == 400  # Bad request
-

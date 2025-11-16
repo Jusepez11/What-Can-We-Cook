@@ -1,14 +1,5 @@
-// js/submitRecipe.js
-
 /**
  * Get references to the Submit Recipe page elements.
- * Relies on the current structure of SubmitRecipe.html:
- *  - 3 text inputs inside the first .card .grid
- *      [0] Recipe title
- *      [1] Category
- *      [2] Short description
- *  - "Submit (demo)" link with class .btn.primary
- *  - Helper <span class="small"> under the button
  */
 function getSubmitRecipeElements() {
     const inputs = document.querySelectorAll(
@@ -39,7 +30,7 @@ function getSubmitRecipeElements() {
  * @param {"info"|"success"|"error"} [type="info"]
  */
 function showSubmitStatus(message, type = "info") {
-    const { helperText } = getSubmitRecipeElements();
+    const {helperText} = getSubmitRecipeElements();
 
     if (!helperText) {
         console.log(type.toUpperCase() + ":", message);
@@ -80,12 +71,10 @@ function collectSubmitRecipeData() {
 
 /**
  * Build the payload object for POST /recipes/.
- * Adjust this to match your RecipeCreate model as needed.
  *
  * @param {{ title: string, category: string, description: string }} data
  * @returns {object}
  */
-
 function buildRecipeCreatePayload(data) {
     return {
         title: data.title,
@@ -99,7 +88,7 @@ function buildRecipeCreatePayload(data) {
 }
 
 /**
- * Handle click on "Submit (demo)" — actually submit the recipe.
+ * Handle submit event.
  *
  * @param {MouseEvent} event
  */
@@ -152,7 +141,7 @@ async function handleSubmitRecipeClick(event) {
         );
 
         // Clear inputs
-        const { titleInput, categoryInput, descriptionInput } =
+        const {titleInput, categoryInput, descriptionInput} =
             getSubmitRecipeElements();
         document.getElementById("recipe-title").value = "";
         document.getElementById("recipe-category").value = "";
@@ -187,7 +176,7 @@ function initSubmitRecipePage() {
         }
     }
 
-    const { submitButton } = getSubmitRecipeElements();
+    const {submitButton} = getSubmitRecipeElements();
 
     if (!submitButton) {
         console.warn('Submit button not found on SubmitRecipe page.');

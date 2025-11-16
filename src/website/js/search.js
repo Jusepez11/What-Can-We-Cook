@@ -271,10 +271,10 @@ function initializeSearch() {
     // Handle Enter key in search input
     searchInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-                // Clear category parameter from URL when performing a search
-                const url = new URL(window.location);
-                url.searchParams.delete('category');
-                window.history.replaceState({}, '', url);
+            // Clear category parameter from URL when performing a search
+            const url = new URL(window.location);
+            url.searchParams.delete('category');
+            window.history.replaceState({}, '', url);
             const query = searchInput.value.trim();
             if (isHomePage) {
                 searchRecipes(query, null, true);
