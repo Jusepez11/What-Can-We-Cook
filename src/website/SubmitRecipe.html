@@ -1,122 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Submit Recipe • What Can We Cook</title>
-    <link rel="icon" type="image/png" href="image/favicon.png"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/stylesheet.css"/>
-    <script src="js/auth.js" defer></script>
-    <script src="js/utils.js" defer></script>
-    <script src="js/submitRecipe.js" defer></script>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Submit Recipe • What Can We Cook</title>
+	<link rel="icon" type="image/png" href="image/favicon.png"/>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/stylesheet.css"/>
+	<script src="js/auth.js" defer></script>
+	<script src="js/utils.js" defer></script>
+	<script src="js/submitRecipe.js" defer></script>
 </head>
 <body>
 <header>
-    <div class="wrap bar">
-        <a class="brand" href="index.html">
-            <img src="image/logo.png" alt="Logo" width="28" height="28"/>
-            <span>What Can We Cook</span>
-        </a>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="Recipes.html">Recipes</a>
-            <a href="Browse.html">Browse</a>
-            <a href="MyPantry.html">My Pantry</a>
-            <a href="Login.html">Login</a>
-            <a href="Signup.html">Sign Up</a>
-            <a href="SubmitRecipe.html" class="btn">Submit</a>
-        </nav>
-    </div>
+	<div class="wrap bar">
+		<a class="brand" href="index.html">
+			<img src="image/logo.png" alt="Logo" width="28" height="28"/>
+			<span>What Can We Cook</span>
+		</a>
+		<nav>
+			<a href="index.html">Home</a>
+			<a href="Recipes.html">Recipes</a>
+			<a href="Browse.html">Browse</a>
+			<a href="MyPantry.html">My Pantry</a>
+			<a href="Login.html">Login</a>
+			<a href="Signup.html">Sign Up</a>
+			<a href="SubmitRecipe.html" class="btn">Submit</a>
+		</nav>
+	</div>
 </header>
 
 <main class="wrap">
 
-    <section class="hero">
-        <h1>Submit a Recipe</h1>
-    </section>
-    <section class="card">
-        <div class="grid" style="grid-template-columns:1fr 1fr">
-            <div>
-                <label class="small">Recipe title</label>
-                <div class="search" style="justify-content:flex-start;margin-top:6px">
-                    <input id="recipe-title" type="text" placeholder="Your great dish">
-                </div>
-            </div>
+	<section class="hero">
+		<h1>Submit a Recipe</h1>
+	</section>
+	<section class="card">
+		<div class="grid" style="grid-template-columns:1fr 1fr">
+			<div>
+				<label class="small">Recipe title</label>
+				<div class="search" style="justify-content:flex-start;margin-top:6px">
+					<input id="recipe-title" type="text" placeholder="Your great dish">
+				</div>
+			</div>
 
-            <div style="margin-top:10px">
-                <label class="small">Servings</label>
-                <div class="search" style="justify-content:flex-start;margin-top:6px">
-                    <input id="recipe-servings" type="number" min="1" value="1" placeholder="e.g., 4">
-                </div>
-            </div>
+			<div style="margin-top:10px">
+				<label class="small">Servings</label>
+				<div class="search" style="justify-content:flex-start;margin-top:6px">
+					<input id="recipe-servings" type="number" min="1" value="1" placeholder="e.g., 4">
+				</div>
+			</div>
 
-            <div style="grid-column:1 / -1; margin-top:10px">
-                <label class="small">Short description</label>
-                <div class="search" style="justify-content:flex-start;margin-top:6px">
+			<div style="grid-column:1 / -1; margin-top:10px">
+				<label class="small">Short description</label>
+				<div class="search" style="justify-content:flex-start;margin-top:6px">
                  <textarea id="recipe-description" rows="3" style="width:100%; border:0; outline:none; resize:vertical;"
                            placeholder="One or two sentences"></textarea>
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <!-- Categories -->
-            <div style="grid-column:1 / -1; margin-top:10px">
-                <label class="small">Categories</label>
-                <div id="selected-categories" class="selected-items"></div>
-                <div class="search" style="justify-content:flex-start;margin-top:6px">
-                    <input id="category-input" type="text" placeholder="Start typing to add categories...">
-                </div>
-            </div>
+			<!-- Categories -->
+			<div style="grid-column:1 / -1; margin-top:10px">
+				<label class="small">Categories</label>
+				<div id="selected-categories" class="selected-items"></div>
+				<div class="search" style="justify-content:flex-start;margin-top:6px">
+					<input id="category-input" type="text" placeholder="Start typing to add categories...">
+				</div>
+			</div>
 
-            <!-- Ingredients -->
-            <div style="grid-column:1 / -1; margin-top:10px">
-                <label class="small">Ingredients</label>
-                <div id="selected-ingredients" class="selected-items"></div>
-                <div class="search" style="justify-content:flex-start;margin-top:6px">
-                    <input id="ingredient-input" type="text" placeholder="Start typing to add ingredients...">
-                </div>
-            </div>
+			<!-- Ingredients -->
+			<div style="grid-column:1 / -1; margin-top:10px">
+				<label class="small">Ingredients</label>
+				<div id="selected-ingredients" class="selected-items"></div>
+				<div class="search" style="justify-content:flex-start;margin-top:6px">
+					<input id="ingredient-input" type="text" placeholder="Start typing to add ingredients...">
+				</div>
+			</div>
 
-            <!-- Instructions full width -->
-            <div style="grid-column:1 / -1; margin-top:10px">
-                <label class="small">Instructions</label>
-                <div class="search" style="justify-content:flex-start;margin-top:6px; width:100%">
+			<!-- Instructions full width -->
+			<div style="grid-column:1 / -1; margin-top:10px">
+				<label class="small">Instructions</label>
+				<div class="search" style="justify-content:flex-start;margin-top:6px; width:100%">
                 <textarea id="recipe-instructions" rows="6" style="width:100%; border:0; outline:none; resize:vertical;"
                           placeholder="Step-by-step instructions"></textarea>
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <!-- Image + Video URLs -->
-            <div style="margin-top:10px">
-                <label class="small">Image URL</label>
-                <div class="search" style="justify-content:flex-start;margin-top:6px">
-                    <input id="recipe-image-url" type="url" placeholder="https://example.com/image.jpg" required>
-                </div>
-            </div>
+			<!-- Image + Video URLs -->
+			<div style="margin-top:10px">
+				<label class="small">Image URL</label>
+				<div class="search" style="justify-content:flex-start;margin-top:6px">
+					<input id="recipe-image-url" type="url" placeholder="https://example.com/image.jpg" required>
+				</div>
+			</div>
 
-            <div style="margin-top:10px">
-                <label class="small">Video embed URL (optional)</label>
-                <div class="search" style="justify-content:flex-start;margin-top:6px">
-                    <input id="recipe-video-url" type="url" placeholder="https://www.youtube.com/embed/...">
-                </div>
-            </div>
-        </div>
+			<div style="margin-top:10px">
+				<label class="small">Video embed URL (optional)</label>
+				<div class="search" style="justify-content:flex-start;margin-top:6px">
+					<input id="recipe-video-url" type="url" placeholder="https://www.youtube.com/embed/...">
+				</div>
+			</div>
+		</div>
 
-        <div style="margin-top:12px" class="row">
-            <button class="btn primary" id="submit-recipe-btn">Submit Recipe</button>
-        </div>
-    </section>
+		<div style="margin-top:12px" class="row">
+			<button class="btn primary" id="submit-recipe-btn">Submit Recipe</button>
+		</div>
+	</section>
 
 
 </main>
 
 <footer>
-    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-        <p class="small">© 2025 What Can We Cook</p>
-        <div class="row">
-            <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
-        </div>
-    </div>
+	<div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+		<p class="small">© 2025 What Can We Cook</p>
+		<div class="row">
+			<a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
+		</div>
+	</div>
 </footer>
 </body>
 </html>

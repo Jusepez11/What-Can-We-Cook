@@ -1,65 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Login • What Can We Cook</title>
-    <link rel="icon" type="image/png" href="image/favicon.png"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="css/stylesheet.css"/>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<title>Login • What Can We Cook</title>
+	<link rel="icon" type="image/png" href="image/favicon.png"/>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/stylesheet.css"/>
 </head>
 <body>
 <header>
-    <div class="wrap bar">
-        <a class="brand" href="index.html">
-            <img src="image/logo.png" alt="Logo" width="28" height="28"/>
-            <span>What Can We Cook</span>
-        </a>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="Recipes.html">Recipes</a>
-            <a href="Browse.html">Browse</a>
-            <a href="MyPantry.html">My Pantry</a>
-            <a href="Login.html">Login</a>
-            <a href="Signup.html">Sign Up</a>
-            <a href="SubmitRecipe.html" class="btn">Submit</a>
-        </nav>
-    </div>
+	<div class="wrap bar">
+		<a class="brand" href="index.html">
+			<img src="image/logo.png" alt="Logo" width="28" height="28"/>
+			<span>What Can We Cook</span>
+		</a>
+		<nav>
+			<a href="index.html">Home</a>
+			<a href="Recipes.html">Recipes</a>
+			<a href="Browse.html">Browse</a>
+			<a href="MyPantry.html">My Pantry</a>
+			<a href="Login.html">Login</a>
+			<a href="Signup.html">Sign Up</a>
+			<a href="SubmitRecipe.html" class="btn">Submit</a>
+		</nav>
+	</div>
 </header>
 <main class="wrap">
-    <section class="auth">
-        <div class="auth-card">
-            <h1>Welcome back</h1>
-            <p class="muted mb">Sign in to save favorites and manage your pantry.</p>
+	<section class="auth">
+		<div class="auth-card">
+			<h1>Welcome back</h1>
+			<p class="muted mb">Sign in to save favorites and manage your pantry.</p>
 
-            <form id="loginForm" action="index.html" method="POST" novalidate>
-                <div class="input-group">
-                    <label for="email">Email or Username</label>
-                    <input type="text" id="email" name="email" placeholder="username or email@example.com"/>
-                    <small class="error" id="emailError" aria-live="polite"></small>
-                </div>
+			<form id="loginForm" action="index.html" method="POST" novalidate>
+				<div class="input-group">
+					<label for="email">Email or Username</label>
+					<input type="text" id="email" name="email" placeholder="username or email@example.com"/>
+					<small class="error" id="emailError" aria-live="polite"></small>
+				</div>
 
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Your password"/>
-                    <small class="error" id="passwordError" aria-live="polite"></small>
-                </div>
+				<div class="input-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" placeholder="Your password"/>
+					<small class="error" id="passwordError" aria-live="polite"></small>
+				</div>
 
-                <button type="submit" class="btn primary full">Sign In</button>
+				<button type="submit" class="btn primary full">Sign In</button>
 
-                <p class="muted center mt">Don't have an account? <a class="link" href="Signup.html">Sign up</a></p>
-            </form>
-        </div>
-    </section>
+				<p class="muted center mt">Don't have an account? <a class="link" href="Signup.html">Sign up</a></p>
+			</form>
+		</div>
+	</section>
 </main>
 
 <footer>
-    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-        <p class="small">© 2025 What Can We Cook</p>
-        <div class="row">
-            <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
-        </div>
-    </div>
+	<div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+		<p class="small">© 2025 What Can We Cook</p>
+		<div class="row">
+			<a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
+		</div>
+	</div>
 </footer>
 
 <script src="js/auth.js"></script>
