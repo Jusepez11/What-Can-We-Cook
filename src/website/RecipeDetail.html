@@ -1,58 +1,65 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Details • What Can We Cook</title>
+    <title>Details - What Can We Cook</title>
     <link rel="icon" type="image/png" href="image/favicon.png"/>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="css/stylesheet.css"/>
-    <script src="js/auth.js"></script>
     <script src="js/recipeDetail.js" defer></script>
 </head>
 <body>
-<header>
-    <div class="wrap bar">
-        <a class="brand" href="index.html">
-            <img src="image/logo.png" alt="Logo" width="28" height="28"/>
-            <span>What Can We Cook</span>
-        </a>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="Recipes.html">Recipes</a>
-            <a href="Browse.html">Browse</a>
-            <a href="MyPantry.html">My Pantry</a>
-            <a href="Login.html">Log In</a>
-            <a href="Signup.html">Sign Up</a>
-            <a href="SubmitRecipe.html" class="btn">Submit</a>
-        </nav>
-    </div>
-</header>
-
-<main class="wrap">
-
-    <section class="hero">
-        <h1>Loading...</h1>
-        <p class="muted">Please wait while we load the recipe details.</p>
-    </section>
-
-    <section class="recipe-hero" id="recipe-photo-section">
-        <!-- Recipe photo will be loaded dynamically -->
-    </section>
-
-    <section class="grid" style="grid-template-columns:1.2fr .8fr;gap:20px">
-        <!-- Recipe details will be loaded dynamically -->
-    </section>
-
-</main>
-
-<footer>
-    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
-        <p class="small">© 2025 What Can We Cook</p>
-        <div class="row">
-            <a class="btn" href="SubmitRecipe.html">Submit a recipe</a>
+    <header>
+        <div class="wrap bar">
+            <a class="brand" href="index.html">
+                <img src="image/logo.png" alt="Logo" width="28" height="28"/>
+                <span>What Can We Cook</span>
+            </a>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="Recipes.html">Recipes</a>
+                <a href="Browse.html">Browse</a>
+                <a href="Favorites.html">Favorites</a>
+                <a href="MyPantry.html">My Pantry</a>
+                <a href="Community.html">Community</a>
+                <a href="SubmitRecipe.html" class="btn">Submit</a>
+                <a href="Signup.html">Sign Up</a>
+            </nav>
         </div>
+    </header>
+
+    <div class="wrap" style="margin-top: 20px; display: flex; align-items: center; justify-content: flex-end;">
+        <span style="margin-right: 10px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase;">Cooking Mode</span>
+        <label class="switch">
+            <input type="checkbox" id="cookingModeToggle">
+            <span class="slider round"></span>
+        </label>
     </div>
-</footer>
+
+    <main class="wrap">
+        <section class="hero"></section>
+        
+        <section class="recipe-hero" id="recipe-photo-section"></section>
+        
+        <section class="grid"></section>
+    </main>
+    
+    <footer>
+        <div class="wrap">
+            <p class="small">© 2025 What Can We Cook</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggle = document.getElementById('cookingModeToggle');
+            toggle.addEventListener('change', (e) => {
+                document.body.classList.toggle('cooking-mode', e.target.checked);
+                // Trigger a layout refresh helper if exists
+                if(typeof reorganizeForCookingMode === 'function') {
+                    reorganizeForCookingMode();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

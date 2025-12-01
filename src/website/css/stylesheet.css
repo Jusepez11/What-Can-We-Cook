@@ -1028,3 +1028,107 @@ ol li {
         max-width: 100% !important;
     }
 }
+
+/* --- COOKING MODE TOGGLE SWITCH --- */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px; width: 16px;
+  left: 4px; bottom: 4px;
+  background-color: white;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #e67e22; /* Orange accent */
+}
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.slider.round {
+  border-radius: 24px;
+}
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/* --- COOKING MODE ACTIVE STYLES --- */
+body.cooking-mode {
+    background-color: #121212 !important; /* High contrast dark bg */
+    color: #ffffff !important;
+}
+
+/* Hide clutter */
+body.cooking-mode #recipe-photo-section,
+body.cooking-mode footer,
+body.cooking-mode .hero p.muted {
+    display: none !important;
+}
+
+/* High contrast headers */
+body.cooking-mode h1, 
+body.cooking-mode h2, 
+body.cooking-mode h3 {
+    color: #e67e22 !important; /* Bright orange for readability */
+    letter-spacing: 1px;
+}
+
+/* Change Grid to Vertical Stack */
+body.cooking-mode .grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px;
+}
+
+/* Make text larger for reading while cooking */
+body.cooking-mode .grid div, 
+body.cooking-mode .grid li {
+    font-size: 1.3rem !important;
+    line-height: 1.6;
+    color: #fff !important;
+}
+
+/* Specific Reordering: Video (1), Ingredients (2), Instructions (3) */
+/* These classes are applied via the JS snippet below */
+body.cooking-mode .cm-order-video {
+    order: 1;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+body.cooking-mode .cm-order-ingredients {
+    order: 2;
+    border: 2px solid #333;
+    padding: 20px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+}
+
+body.cooking-mode .cm-order-instructions {
+    order: 3;
+    padding: 20px;
+}
+
+/* Increase checkbox/list readability */
+body.cooking-mode ul li, 
+body.cooking-mode ol li {
+    margin-bottom: 15px;
+    padding-left: 10px;
+}

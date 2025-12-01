@@ -313,3 +313,52 @@ function displayError(message) {
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', loadRecipeDetails);
+
+/**
+ * Helper function to identify and tag sections for Cooking Mode reordering.
+ * This runs automatically when content is loaded into the grid.
+ */
+function reorganizeForCookingMode() {
+    const gridContainer = document.querySelector('.grid');
+    if (!gridContainer) return;
+
+    const children = Array.from(gridContainer.children);
+
+    children.forEach(child => {
+        // Check contents to identify what section this is
+        const htmlContent = child.innerHTML.toLowerCase();
+        
+        // 1. Identification: Video
+        // Checks for iframe or video tags
+        if (htmlContent.includes('<iframe') || htmlContent.includes('<video')) {
+            child.classList.add('cm-order-video');
+        }
+        
+        // 2. Identification: Ingredients
+        // Checks for specific headers or list keywords often found in ingredients
+        else if (htmlContent.includes('ingredients') || htmlContent.includes('<ul>')) {
+            child.classList.add('cm-order-ingredients');
+        }
+        
+        // 3. Identification: Instructions
+        // Checks for headers or ordered lists (1. 2. 3.)
+        else if (htmlContent.includes('instructions') || htmlContent.includes('method') || htmlContent.includes('<ol>')) {
+            child.classList.add('cm-order-instructions');
+        }
+    });
+}
+
+// Hook into the existing load process
+// We add a MutationObserver to watch for when the recipe is actually rendered
+const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+            reorganizeForCookingMode();
+        }
+    });
+});
+
+const gridTarget = document.querySelector('.grid');
+if (gridTarget) {
+    observer.observe(gridTarget, { childList: true, subtree: true });
+}
