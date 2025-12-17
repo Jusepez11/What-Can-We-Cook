@@ -25,4 +25,6 @@ Set your IDE to use Tabs (width of 4).
 
 ### Tests
 To run the tests just run the following command\
-`pytest src/api/tests/`
+```bash
+  pytest src/api/tests/
+```
