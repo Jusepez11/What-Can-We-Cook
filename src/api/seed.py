@@ -196,16 +196,6 @@ def seed_if_needed():
 		])
 		db.commit()
 
-	if db.query(PantryIngredient).count() == 0:
-		pantry1 = PantryIngredient(
-			user_id=1,
-			ingredient_id=1,
-			quantity="Two",
-			unit="kgs"
-		)
-		db.add(pantry1)
-		db.commit()
-
 	if db.query(User).filter(User.username == "test").first() is None:
 		test_user = User(
 			username="test",
@@ -224,5 +214,16 @@ def seed_if_needed():
 		)
 		db.add(test_user)
 		db.commit()
+
+	if db.query(PantryIngredient).count() == 0:
+		pantry1 = PantryIngredient(
+			user_id=1,
+			ingredient_id=1,
+			quantity="Two",
+			unit="kgs"
+		)
+		db.add(pantry1)
+		db.commit()
+
 
 	db.close()
