@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://https://api-what-can-we-cook.onrender.com';
 
 /**
  * Get access token from sessionStorage
