@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'http://api-what-can-we-cook.onrender.com';
 
 /**
  * Load all categories from the API
