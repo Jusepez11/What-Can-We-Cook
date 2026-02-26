@@ -1,4 +1,4 @@
-# What-Can-We-Cook (ITIS-3300 Project)
+# What-Can-We-Cook
 ![Homepage](img/homepage.png "Homepage")
 Group information available in the [GROUP-INFO](./GROUP-INFO) file.
 
