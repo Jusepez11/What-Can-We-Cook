@@ -28,3 +28,5 @@ To run the tests just run the following command\
 ```bash
   pytest src/api/tests/
 ```
+### Live
+https://what-can-we-cook.onrender.com
